@@ -1,0 +1,20 @@
+/* Eco-trade Style */
+//$fx-ui-common: '../submodule/fenix-ui-common/css/';
+
+@import 'theme/variables';
+
+/* Fenix Utils*/
+@import '../submodule/fenix-ui-common/css/fenix-style-no-variables';
+
+///* Pages */
+//@import 'pages/analysis';
+//@import 'pages/datamanagement';
+//@import 'pages/home';
+
+
+/* Components */
+
+
+///* Theme */
+@import 'theme/theme';
+@import "theme/tabs";

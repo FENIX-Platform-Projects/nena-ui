@@ -1,0 +1,183 @@
+<script type='text/x-handlebars-template' id='wsp_ui_structure'>
+    <div class='container'>
+        <!--<div class='row'>-->
+            <!--<div class='col-xs-12'>-->
+                <!--<h1>-->
+                    <!--<img src='images/fx-logo.png' style='width: 60px; heigh: 60px;'>-->
+                    <!--{{wsp}}-->
+                <!--</h1>-->
+            <!--</div>-->
+        <!--</div>-->
+        <div id="wsp-landing">
+            <div class='row'>
+                <div class='col-xs-2'>
+                    <h4>{{{selectable_layers}}}</h4>
+
+                    <div class="checkbox" data-role="wheat">
+                        <label><input type="checkbox" checked value="">{{{wheat}}}</label>
+                    </div>
+                    <div class="checkbox" data-role="population_landscan">
+                        <label><input type="checkbox" value="">{{{population_landscan}}}</label>
+                    </div>
+
+                    <div class="checkbox" data-role="rainfed_land_gaez">
+                        <label><input type="checkbox" value="">{{{rainfed_land_gaez}}}</label>
+                    </div>
+                    <div class="checkbox" data-role="irrigated_areas_solaw_2012">
+                        <label><input type="checkbox" value="">{{{irrigated_areas_solaw_2012}}}</label>
+                    </div>
+                    <div class="checkbox" data-role="cultivated_land_gaez_2010">
+                        <label><input type="checkbox" value="">{{{cultivated_land_gaez_2010}}}</label>
+                    </div>
+                    <h4>Administrative Boundaries</h4>
+                    <div class="checkbox" data-role="eco_region">
+                        <label><input type="checkbox" value="">{{{eco_region}}}</label>
+                    </div>
+                </div>
+                <div class='col-xs-10'>
+                    <div data-role="map" style="height: 700px; overflow: hidden;"></div>
+                </div>
+            </div>
+        </div>
+        <div class='row' id="wsp-tool">
+            <!--<div class='col-xs-2' data-role="layers">
+               <!-- <div class='col-xs-12'>
+                    <h4>{{{selectable_layers}}}</h4>
+                </div>
+                <div class="checkbox" data-role="wheat">
+                    <label><input type="checkbox" value="">{{{wheat}}}</label>
+                </div>
+
+                <div class="checkbox" data-role="population_landscan">
+                    <label><input type="checkbox" value="">{{{population_landscan}}}</label>
+                </div>
+
+                <div class="checkbox" data-role="rainfed_land_gaez">
+                    <label><input type="checkbox" value="">{{{rainfed_land_gaez}}}</label>
+                </div>
+                <div class="checkbox" data-role="irrigated_areas_solaw_2012">
+                    <label><input type="checkbox" value="">{{{irrigated_areas_solaw_2012}}}</label>
+                </div>
+                <div class="checkbox" data-role="cultivated_land_gaez_2010">
+                    <label><input type="checkbox" value="">{{{cultivated_land_gaez_2010}}}</label>
+                </div>
+            </div> -->
+            <div class='col-xs-12'>
+                {{#each box}}
+                    <div class='row box' id='{{box_id}}'>
+                        <div data-role='box-header'>
+                            <div class='row'>
+                                <div class='col-xs-12'>
+                                    <h1>{{{box_title}}}</h1>
+                                </div>
+                            </div>
+                            <div class='row'>
+                                <div class='col-xs-3'>
+                                    <select style='width: 100%;' data-role="dd" class='select2'>
+                                    </select>
+                                </div>
+                                <div class='col-xs-1'>
+                                    <div class="checkbox" data-role="anomaly">
+                                        <label><input type="checkbox" value="">{{{anomaly}}}</label>
+                                    </div>
+                                </div>
+                                <div class='col-xs-1'>
+                                    <div class="checkbox" data-role="anomaly_dpy">
+                                        <label><input type="checkbox" value="">{{{anomaly_dpy}}}</label>
+                                    </div>
+                                </div>
+                                {{#if this.zscore}}
+                                    <div class='col-xs-1'>
+                                        <div class="checkbox" data-role="zscore">
+                                            <label><input type="checkbox" value="">{{{z_score}}}</label>
+                                        </div>
+                                    </div>
+                                {{/if}}
+                            </div>
+                            <!--<div class='row'>
+                                <div class='col-xs-2'>
+                                    <div class="checkbox" data-role="wheat">
+                                        <label><input type="checkbox" value="">{{{wheat}}}</label>
+                                    </div>
+                                </div>
+
+                                <div class='col-xs-2'>
+                                    <div class="checkbox" data-role="population_landscan">
+                                        <label><input type="checkbox" value="">{{{population_landscan}}}</label>
+                                    </div>
+                                </div>
+
+                                <div class='col-xs-2'>
+                                    <div class="checkbox" data-role="rainfed_land_gaez">
+                                        <label><input type="checkbox" value="">{{{rainfed_land_gaez}}}</label>
+                                    </div>
+                                </div>
+                                <div class='col-xs-2'>
+                                    <div class="checkbox" data-role="irrigated_areas_solaw_2012">
+                                        <label><input type="checkbox" value="">{{{irrigated_areas_solaw_2012}}}</label>
+                                    </div>
+                                </div>
+                                <div class='col-xs-2'>
+                                    <div class="checkbox" data-role="cultivated_land_gaez_2010">
+                                        <label><input type="checkbox" value="">{{{cultivated_land_gaez_2010}}}</label>
+                                    </div>
+                                </div>
+                            </div>-->
+                        </div>
+                        <hr>
+                        <div data-role='box-content' data-role="chart-content">
+                            <div class='row'>
+                                <div class='col-xs-2'>
+                                    <h4>{{{selectable_layers}}}</h4>
+
+                                    <div class="checkbox" data-role="wheat">
+                                        <label><input type="checkbox" value="">{{{wheat}}}</label>
+                                    </div>
+                                    <div class="checkbox" data-role="population_landscan">
+                                        <label><input type="checkbox" value="">{{{population_landscan}}}</label>
+                                    </div>
+
+                                    <div class="checkbox" data-role="rainfed_land_gaez">
+                                        <label><input type="checkbox" value="">{{{rainfed_land_gaez}}}</label>
+                                    </div>
+                                    <div class="checkbox" data-role="irrigated_areas_solaw_2012">
+                                        <label><input type="checkbox" value="">{{{irrigated_areas_solaw_2012}}}</label>
+                                    </div>
+                                    <div class="checkbox" data-role="cultivated_land_gaez_2010">
+                                        <label><input type="checkbox" value="">{{{cultivated_land_gaez_2010}}}</label>
+                                    </div>
+                                    <h4>Administrative Boundaries</h4>
+                                    <div class="checkbox" data-role="eco_region">
+                                        <label><input type="checkbox" value="">{{{eco_region}}}</label>
+                                    </div>
+                                </div>
+                                <div class='col-xs-10'>
+                                    <div data-role="map" style="height: 600px; overflow: hidden;"></div>
+                                    <br>
+                                    <div data-role="chart"></div>
+                                </div>
+                            </div>
+                            <!--<div class='row'>-->
+                                <!--<div class='col-xs-10'>-->
+                                    <!--<div data-role="chart"></div>-->
+                                <!--</div>-->
+                            <!--</div>-->
+                        </div>
+                        <div data-role='box-footer'>
+                            <div class='pull-right'>
+                                {{{footer_text}}}
+                            </div>
+                        </div>
+                    </div>
+                    {{#if this.add_new_line}}
+                        <!--</div>-->
+                        <!--<hr>-->
+                        <!--<div class='row'>-->
+                    {{/if}}
+
+                {{/each}}
+            </div>
+        </div>
+    </div>
+    </div>
+</script>

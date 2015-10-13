@@ -1,0 +1,64 @@
+body {
+	overflow-y:scroll;
+}
+/*section {*/
+	/*border: 1px solid blue;*/
+	/*margin: 20px 0;*/
+/*}*/
+
+.eco_map {
+	overflow: hidden;
+	width: 100%;
+}
+.eco_map,
+#tab_growth{
+	height: 320px;
+}
+
+#filter_region,
+#filter_country {
+	height: 122px;
+}
+
+#filter_commodity_code,
+#filter_partner_code_country {
+	height: 120px;	
+	overflow-y: auto;
+	overflow-x: hidden;
+}
+
+#filter_year_map_label,
+#filter_year_map {
+	margin-top: 20px;
+	margin-bottom: 20px;
+}
+#tab_growth {
+	overflow-y:auto;
+}
+
+.fm-box-legend {
+	opacity: 0.8;
+	min-width:104px;
+	min-height: 182px;
+}
+/*.overview {*/
+	/*margin-left: 20px;*/
+/*}*/
+.overview img {
+	max-width: 250px;
+	height: auto;
+}
+#filter_trade_flow_code label,
+#filter_trade_flow_code_country label {
+	margin: 0 10px;
+}
+
+/*.table {*/
+	/*border: 1px solid blue;*/
+	/*height: 320px;*/
+/*}*/
+
+.dropdown-menu {
+  box-shadow: 0 16px 22px rgba(0,0,0,0.4);
+  padding: 10px;
+}
