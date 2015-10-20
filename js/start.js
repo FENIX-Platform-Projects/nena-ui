@@ -121,18 +121,18 @@ define([
                 {
                     id: 'mod13a3',
                     title: i18n.ndvi_label,
-                    coverageSectorCode: 'mod13a3',
+                    coverageSectorCode: 'nena_mod13a3',
                     cachedLayers: [],
                     addZscore: true,
                     addHotspot: true,
                     addWheatAreaAFG: true,
                     addGaul1: true,
                     addZonalStats: true,
-                    anomalyLayerPrefix: 'eco_mod13a3_anomaly:ndvi_anomaly_1km_mod13a3',
-                    anomalyDPYLayerPrefix: 'eco_mod13a3_anomaly_dpy:ndvi_anomaly_dpy_1km_mod13a3',
-                    zscoreLayerPrefix: 'eco_mod13a3_zscore:ndvi_zscore_1km_mod13a3',
+                    anomalyLayerPrefix: 'nena_mod13a3_anomaly:ndvi_anomaly_1km_mod13a3',
+                    anomalyDPYLayerPrefix: 'nena_mod13a3_anomaly_dpy:ndvi_anomaly_dpy_1km_mod13a3',
+                    zscoreLayerPrefix: 'nena_mod13a3_zscore:ndvi_zscore_1km_mod13a3',
                     averageLayerPrefix: {
-                        workspace: 'eco_mod13a3_avg',
+                        workspace: 'nena_mod13a3_avg',
                         layerName: 'ndvi_average_1km_mod13a3'
                     },
                     chart: {
