@@ -19,7 +19,7 @@ define({
         cultivated_land_gaez_2010: 'Cultivated Land GAEZ (2010)',
         chirps: 'Rainfall',
         selectable_layers: 'Layers',
-        eco_region: 'ECO Region',
+        eco_region: 'NENA Region',
         gaul1: 'ADM. Unit Level1 (AFG)',
         hotspot: 'HotSpot (AFG) > -30%',
         wheat_area: 'Wheat Area (AFG)',

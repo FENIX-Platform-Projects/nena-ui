@@ -45,7 +45,68 @@ define([
             tool: {
                 init: false
             },
+            countriesGaul0: [
+                '4',     //Algeria
+                '6',     //Sudan
+                '21',    //Bahrain
+                '74',    //South Sudan
+                '91',    //Gaza Strip
+                '102',   //Abyei
+                '117',   //Iran (Islamic Republic of)
+                '118',   //Iraq
+                '121',   //Israel
+                '130',   //Jordan
+                '137',   //Kuwait
+                '141',   //Lebanon
+                '145',   //Libya
+                '159',   //Mauritania
+                '169',   //Morocco
+                '187',   //Oman
+                '201',   //Qatar
+                '215',   //Saudi Arabia
+                '238',   //Syrian Arab Republic
+                '248',   //Tunisia
+                '255',   //United Arab Emirates
+                '267',   //West Bank
+                '268',   //Western Sahara
+                '269',   //Yemen
+                '40760', //Hala'ib triangle
+                '40762', //Ma'tan al-Sarra
+                '40766', //Egypt
+                '61013'  //Ilemi triangle
+            ],
             box: [
+                {
+                    id: 'mod13a3',
+                    title: i18n.ndvi_label,
+                    coverageSectorCode: 'nena_mod13a3',
+                    cachedLayers: [],
+                    addZscore: true,
+                    addHotspot: true,
+                    addWheatAreaAFG: true,
+                    addGaul1: true,
+                    addZonalStats: true,
+                    anomalyLayerPrefix: 'nena_mod13a3_anomaly:ndvi_anomaly_1km_mod13a3',
+                    anomalyDPYLayerPrefix: 'nena_mod13a3_anomaly_dpy:ndvi_anomaly_dpy_1km_mod13a3',
+                    zscoreLayerPrefix: 'nena_mod13a3_zscore:ndvi_zscore_1km_mod13a3',
+                    averageLayerPrefix: {
+                        workspace: 'nena_mod13a3_avg',
+                        layerName: 'ndvi_average_1km_mod13a3'
+                    },
+                    chart: {
+                        formula: '{{x}} / 10000',
+                        chartObj: {
+                            yAxis: {
+                                title: {
+                                    text: 'NDVI'
+                                }
+                            },
+                            tooltip: {
+                                valueDecimals: 4
+                            }
+                        }
+                    }
+                },            
                 {
                     id: 'myd11c3',
                     title: i18n.temperature,
@@ -117,37 +178,6 @@ define([
                             }
                         }
                     }
-                },
-                {
-                    id: 'mod13a3',
-                    title: i18n.ndvi_label,
-                    coverageSectorCode: 'nena_mod13a3',
-                    cachedLayers: [],
-                    addZscore: true,
-                    addHotspot: true,
-                    addWheatAreaAFG: true,
-                    addGaul1: true,
-                    addZonalStats: true,
-                    anomalyLayerPrefix: 'nena_mod13a3_anomaly:ndvi_anomaly_1km_mod13a3',
-                    anomalyDPYLayerPrefix: 'nena_mod13a3_anomaly_dpy:ndvi_anomaly_dpy_1km_mod13a3',
-                    zscoreLayerPrefix: 'nena_mod13a3_zscore:ndvi_zscore_1km_mod13a3',
-                    averageLayerPrefix: {
-                        workspace: 'nena_mod13a3_avg',
-                        layerName: 'ndvi_average_1km_mod13a3'
-                    },
-                    chart: {
-                        formula: '{{x}} / 10000',
-                        chartObj: {
-                            yAxis: {
-                                title: {
-                                    text: 'NDVI'
-                                }
-                            },
-                            tooltip: {
-                                valueDecimals: 4
-                            }
-                        }
-                    }
                 }
             ],
 
@@ -186,7 +216,7 @@ define([
                 },
                 eco_region: {
                     workspace: 'fenix',
-                    layerName: 'gaul0_eco_3857',
+                    layerName: 'nena_region_3857',
                     enabled: false,
                     openlegend: false,
                     zindex:400
@@ -357,7 +387,7 @@ define([
                 });
             }, this));
 
-            this.o.landing.m.zoomTo("country", "iso3", ["AFG", "AZE", "IRN", "KAZ", "KGZ", "PAK", "TJK", "TUR", "TKM", "UZB"]);
+            this.o.landing.m.zoomTo("country", "adm0_code", this.o.countriesGaul0);
 
             this.o.landing.init = true;
         }
@@ -458,7 +488,7 @@ define([
                 });
 
                 // zoomTo
-                this.o.box[i].m.zoomTo("country", "iso3", ["AFG", "AZE", "IRN", "KAZ", "KGZ", "PAK", "TJK", "TUR", "TKM", "UZB"]);
+                this.o.box[i].m.zoomTo("country", "adm0_code", this.o.countriesGaul0);
 
                 Object.keys(this.o.layers).forEach(_.bind(function (key) {
                     this.o.box[i].$box.find('[data-role="' + key + '"]').on('click', {
