@@ -31,21 +31,8 @@ define([
     'use strict';
 
     function WSP() {
-        this.o = {
-            lang: 'EN',
-            prefix: 'wsp_ui_',
-            s: {
-                placeholder: '#content',
-                tool: "#wsp-tool",
-                landing: "#wsp-landing"
-            },
-            landing: {
-                init: false
-            },
-            tool: {
-                init: false
-            },
-            countriesGaul0: [
+
+        var countriesGaul0 = [
                 '4',     //Algeria
                 '6',     //Sudan
                 '21',    //Bahrain
@@ -74,7 +61,23 @@ define([
                 '40762', //Ma'tan al-Sarra
                 '40766', //Egypt
                 '61013'  //Ilemi triangle
-            ],
+            ];
+
+        this.o = {
+            lang: 'EN',
+            prefix: 'wsp_ui_',
+            s: {
+                placeholder: '#content',
+                tool: "#wsp-tool",
+                landing: "#wsp-landing"
+            },
+            landing: {
+                init: false
+            },
+            tool: {
+                init: false
+            },
+            countriesGaul0: countriesGaul0,
             box: [
                 {
                     id: 'mod13a3',
@@ -217,15 +220,14 @@ define([
                 eco_region: {
                     workspace: 'fenix',
                     layerName: 'nena_region_3857',
-                    enabled: false,
+                    enabled: true,
                     openlegend: false,
                     zindex:400
                 },
                 gaul1: {
                     workspace: 'fenix',
                     layerName: 'gaul1_3857',
-                    //cql_filter: "adm0_code IN (1.00000, 19.00000, 132.00000, 117.00000, 138.00000, 188.00000, 239.00000, 249.00000,  250.00000, 261.00000)",
-                    cql_filter: "adm0_code IN (1.00000)",
+                    cql_filter: 'adm0_code IN ('+ countriesGaul0.join(',') +')',
                     style: 'gaul1_highlight_polygon',
                     enabled: false,
                     openlegend: false,
@@ -590,8 +592,9 @@ define([
         }
     };
 
-
+    // create listbox for the layers by coveragesector of the d3s
     WSP.prototype.fillDD = function(box) {
+
         var coverageSectorCode = box.coverageSectorCode,
             $dd = box.$dd;
 

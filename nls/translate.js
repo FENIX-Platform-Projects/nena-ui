@@ -20,7 +20,7 @@ define({
         chirps: 'Rainfall',
         selectable_layers: 'Layers',
         eco_region: 'NENA Region',
-        gaul1: 'ADM. Unit Level1 (AFG)',
+        gaul1: 'ADM. Unit Level1',
         hotspot: 'HotSpot (AFG) > -30%',
         wheat_area: 'Wheat Area (AFG)',
         zonalstats_gaul1: 'Zonalstats ADM1 (AFG)',
