@@ -223,7 +223,7 @@ define([
                     layerName: 'nena_region_3857',
                     openlegend: false,
                     enabled: true,                    
-                    zindex: 400,
+                    zindex: 4000,
                     startup: true
                 },
                 gaul1: {
@@ -347,7 +347,20 @@ define([
         dynamic_data = $.extend(true, {}, dynamic_data, i18n);
         var html = template(dynamic_data);
         this.$placeholder.html(html);
-        $('.select2').select2();
+
+        this.o.$ss = this.$placeholder.find('[data-role="ss"]');
+
+        for (var i = 0; i < this.o.box.length; i++) {
+            var selected = ( i == 0 )? " selected='selected'": '';
+            this.o.$ss.append("<option value='" + this.o.box[i].id + selected +"'>" + this.o.box[i].title + "</option>");
+        }
+        this.$placeholder.find('.select2').select2();
+
+        this.o.$ss.on('change', function(e) {
+            var id = $(this).find(":selected").val();
+            $('.boxes').hide();
+            $('#'+id).show();
+        })
 
         this.$tool =  this.$placeholder.find(this.o.s.tool);
         this.$landing =  this.$placeholder.find(this.o.s.landing);
@@ -359,11 +372,16 @@ define([
 
         if (this.o.tool.init === false) {
             var _this = this;
-            for (var i = 0; i < this.o.box.length; i++) {
+
+            for (var i = 0; i < this.o.box.length; i++)
+            {
                 this.o.box[i].$box = this.$tool.find('#' + this.o.box[i].id);
                 this.o.box[i].$dd = this.o.box[i].$box.find('[data-role="dd"]');
                 this.o.box[i].$map = this.o.box[i].$box.find('[data-role="map"]');
                 this.o.box[i].$chart = this.o.box[i].$box.find('[data-role="chart"]');
+                
+                if(i===0)
+                    this.o.box[i].$box.show();
 
                 // init dropdown
                 this.o.box[i].$dd = this.o.box[i].$box.find('[data-role="dd"]');
@@ -581,7 +599,7 @@ define([
                 $dd.append(html);
 
                 // load layer
-                $dd.change({box: box}, function(e) {
+                $dd.on('change',{box: box}, function(e) {
                     _this.onDDSelection(e.data.box, $(this).find(":selected").val());
                 });
 
