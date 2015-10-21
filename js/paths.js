@@ -44,17 +44,17 @@ define(function() {
                 'fenix-ui-map-config': FENIX_CDN + '/js/fenix-ui-map/0.0.1-fullscreen-fixed/fenix-ui-map-config',
 
                 'fx-wsp-ui/start' : './start',
-                'fx-wsp-ui/html' : '../html',
-                'fx-wsp-ui/config' : '../config',
-                'fx-wsp-ui/nls': '../nls',
+                'fx-wsp-ui/html'  : '../html',
+                'fx-wsp-ui/config': '../config',
+                'fx-wsp-ui/nls'   : '../nls',
 
                 // Chart Creator
-                'fx-c-c/start' : SUBMODULES_CHARTS + 'start',
-                'fx-c-c/html' :  SUBMODULES_CHARTS + '../html',
+                'fx-c-c/start'  :  SUBMODULES_CHARTS + 'start',
+                'fx-c-c/html'   :  SUBMODULES_CHARTS + '../html',
                 'fx-c-c/config' :  SUBMODULES_CHARTS + '../../config',
-                'fx-c-c/adapters' :  SUBMODULES_CHARTS + './adapters',
+                'fx-c-c/adapters'  :  SUBMODULES_CHARTS + './adapters',
                 'fx-c-c/templates' :  SUBMODULES_CHARTS + './templates',
-                'fx-c-c/creators' :  SUBMODULES_CHARTS + './creators',
+                'fx-c-c/creators'  :  SUBMODULES_CHARTS + './creators',
 
                 // Charts third party libs
                 text: '//fenixapps.fao.org/repository/js/requirejs/plugins/text/2.0.12/text',

@@ -3,14 +3,14 @@
 define([
     'jquery',
     'underscore',
+    'q',    
     'handlebars',
     //'text!fx-wsp-ui/html/structure.hbs',
-    'text!fx-wsp-ui/html/templates_tabs.hbs',
+    'text!fx-wsp-ui/html/templates_tabs.html',
     'i18n!fx-wsp-ui/nls/translate',
     'fx-c-c/start',
     'fx-wsp-ui/config/Services',
     'text!fx-wsp-ui/config/gaul1_ndvi_afg.json',
-    'q',
     'fx-wsp-ui/config/highcharts_template',
     'fenix-ui-map',
     'select2',
@@ -19,13 +19,13 @@ define([
 ], function (
     $,
     _,
+    Q,    
     Handlebars,
     templates,
     i18n,
     ChartCreator,
     Services,
     ZonalStats,
-    Q,
     HighchartsTemplate
 ) {
     'use strict';
@@ -351,55 +351,8 @@ define([
         this.$tool =  this.$placeholder.find(this.o.s.tool);
         this.$landing =  this.$placeholder.find(this.o.s.landing);
 
-        var _this =this;
-        $('a[data-toggle="tab"]').on('shown.bs.tab', function (e) {
-
-            var tab = $(e.target).attr("href") // activated tab
-
-            if (tab == _this.o.s.tool) {
-                _this.renderTool();
-            }
-            if (tab == _this.o.s.landing) {
-                _this.renderLanding();
-            }
-        });
-
-        // default render
-        this.renderLanding();
+        this.renderTool();
     };
-
-    WSP.prototype.renderLanding = function(c) {
-
-        if (this.o.landing.init === false) {
-            this.o.landing.m = this.initMap(this.$landing.find('[data-role="map"]'));
-
-            this.toggleLayer(this.o.landing, 'population_landscan', this.o.layers.population_landscan, i18n.population_landscan, true, true);
-
-            // Global layers (Toggle conditions)
-            Object.keys(this.o.layers).forEach(_.bind(function (key) {
-                var _this = this;
-                this.$landing.find('[data-role="' + key + '"]').on('click', {
-                    box: this.o.landing,
-                    layers: this.o.layers[key]
-                }, function (e) {
-                    var box = e.data.box,
-                        layers = e.data.layers;
-
-                    _this.toggleLayer(box, key, layers, i18n[key], true, true);
-                });
-            }, this));
-
-            this.o.landing.m.zoomTo("country", "adm0_code", this.o.countriesGaul0);
-
-            this.o.landing.init = true;
-        }
-        else {
-            // force invalidate size
-            this.o.landing.m.invalidateSize();
-        }
-
-    };
-
 
     WSP.prototype.renderTool = function() {
 
