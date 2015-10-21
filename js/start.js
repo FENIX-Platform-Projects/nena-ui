@@ -32,7 +32,8 @@ define([
 
     function WSP() {
 
-        var countriesGaul0 = [
+        var layerPrefix = 'eco_',
+            countriesGaul0 = [
                 '4',     //Algeria
                 '6',     //Sudan
                 '21',    //Bahrain
@@ -117,11 +118,11 @@ define([
                     cachedLayers: [],
                     selectedLayer: null,
                     addZscore: true,
-                    anomalyLayerPrefix: 'eco_myd11c3_anomaly:lst_anomaly_6km_myd11c3',
-                    anomalyDPYLayerPrefix: 'eco_myd11c3_anomaly_dpy:lst_anomaly_dpy_6km_myd11c3',
-                    zscoreLayerPrefix: 'eco_myd11c3_zscore:lst_zscore_6km_myd11c3',
+                    anomalyLayerPrefix: layerPrefix+'myd11c3_anomaly:lst_anomaly_6km_myd11c3',
+                    anomalyDPYLayerPrefix: layerPrefix+'myd11c3_anomaly_dpy:lst_anomaly_dpy_6km_myd11c3',
+                    zscoreLayerPrefix: layerPrefix+'myd11c3_zscore:lst_zscore_6km_myd11c3',
                     averageLayerPrefix: {
-                        workspace: 'eco_myd11c3_avg',
+                        workspace: layerPrefix+'myd11c3_avg',
                         layerName: 'lst_average_6km_myd11c3'
                     },
                     chart: {
@@ -141,11 +142,11 @@ define([
                     coverageSectorCode: 'et',
                     cachedLayers: [],
                     addZscore: true,
-                    anomalyLayerPrefix: 'eco_et_anomaly:et_anomaly_6km_mod16a2',
-                    anomalyDPYLayerPrefix: 'eco_et_anomaly_dpy:et_anomaly_dpy_6km_mod16a2',
-                    zscoreLayerPrefix: 'eco_et_zscore:et_zscore_6km_mod16a2',
+                    anomalyLayerPrefix: layerPrefix+'et_anomaly:et_anomaly_6km_mod16a2',
+                    anomalyDPYLayerPrefix: layerPrefix+'et_anomaly_dpy:et_anomaly_dpy_6km_mod16a2',
+                    zscoreLayerPrefix: layerPrefix+'et_zscore:et_zscore_6km_mod16a2',
                     averageLayerPrefix: {
-                        workspace: 'eco_et_avg',
+                        workspace: layerPrefix+'et_avg',
                         layerName: 'et_average_6km_mod16a2'
                     },
                     chart: {
@@ -220,32 +221,32 @@ define([
                 eco_region: {
                     workspace: 'fenix',
                     layerName: 'nena_region_3857',
-                    enabled: true,
                     openlegend: false,
-                    zindex:400
+                    enabled: true,                    
+                    zindex: 400,
+                    startup: true
                 },
                 gaul1: {
                     workspace: 'fenix',
                     layerName: 'gaul1_3857',
                     cql_filter: 'adm0_code IN ('+ countriesGaul0.join(',') +')',
                     style: 'gaul1_highlight_polygon',
-                    enabled: false,
                     openlegend: false,
+                    enabled: false,                    
                     zindex:450
                 },
                 hotspot: {
                     workspace: 'eco',
                     layerName: 'drought_hotspot_afg_200803_3857',
-                    enabled: false,
-                    openlegend: false
+                    openlegend: false,
+                    enabled: false                    
                 },
                 wheat_area: {
                     workspace: 'eco',
                     layerName: 'wheat_area_afg_3857',
-                    enabled: false,
-                    openlegend: true
-                },
-
+                    openlegend: true,
+                    enabled: false                    
+                }
             },
 
             // query raster timeserie
@@ -445,8 +446,11 @@ define([
                 // zoomTo
                 this.o.box[i].m.zoomTo("country", "adm0_code", this.o.countriesGaul0);
 
-                Object.keys(this.o.layers).forEach(_.bind(function (key) {
-                    this.o.box[i].$box.find('[data-role="' + key + '"]').on('click', {
+                _.keys(this.o.layers).forEach(_.bind(function (key) {
+
+                    var $chk = this.o.box[i].$box.find('[data-role="' + key + '"]');
+
+                    $chk.on('click', {
                         box: this.o.box[i],
                         layers: this.o.layers[key]
                     }, function (e) {
@@ -455,25 +459,15 @@ define([
 
                         _this.toggleLayer(box, key, layers, i18n[key]);
                     });
+
+                    if(_this.o.layers[key].startup)
+                        $chk.trigger('click');
+
                 }, this));
             }
 
             // sync maps
             this.syncMaps(this.o.box);
-
-            // Global layers (Toggle conditions)
-            /*        Object.keys(this.o.layers).forEach(_.bind(function(key) {
-             this.$tool.find('[data-role="'+ key +'"] input[type="checkbox"]').change({box: this.o.box, layers: this.o.layers[key]}, function (e) {
-             var box = e.data.box,
-             layers = e.data.layers;
-
-             // TODO: make it workable with the checkbox seleciont (this.checked)
-             for (var i=0; i< box.length; i++) {
-             _this.toggleLayer(box[i], key, layers, i18n[key]);
-             }
-             });
-
-             }, this));*/
 
             this.o.tool.init = true;
         }
@@ -649,6 +643,11 @@ define([
         return (month > 9)? year.toString() + month.toString(): year.toString() + '0' + month.toString();
     };
 
+    WSP.prototype.handlePixelSelection = function(e) {
+        console.log('callback click', e)
+
+    };
+
     WSP.prototype.loadLayer = function(m, selectedLayer, workspace, layerName, layerTitle, box) {
 
         // remove selected layer
@@ -665,13 +664,13 @@ define([
             lang: 'EN',
             openlegend: true,
             defaultgfi: true,
-            /*                customgfi: {
-             content: {
-             EN: "{{GRAY_INDEX}}"
-             },
-             showpopup: true,
-             callback: _.bind(this.handlePixelSelection, this, box)
-             }*/
+            customgfi: {
+                content: {
+                    EN: "{{GRAY_INDEX}}"
+                },
+                showpopup: true,
+                callback: _.bind(this.handlePixelSelection, this, box)
+            }
         });
 
         m.addLayer(selectedLayer);
@@ -751,27 +750,6 @@ define([
                 }
             }
         });
-
-
-
-        //var membersList = this.getDataTest();
-
-        //membersList.then(function (res) {
-        //    console.log(res);
-        //    console.log("here");
-        //}).then();
-
-
-
-        /*        this.getDataTest().then(function(c) {
-         console.log("done");
-         console.log(c);
-         }).then(
-         this.getDataTest().then(function(c) {
-         console.log("done");
-         console.log(c)
-         })
-         )*/
 
     };
 
