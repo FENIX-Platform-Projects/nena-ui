@@ -1,15 +1,15 @@
 <script type='text/x-handlebars-template' id='wsp_ui_structure'>
     <div class="container-fluid" style="margin-top:3px;">
 
-        <a href="#wsp-tool" data-toggle="tab">Climate monitoring</a>
-
         <div class="tab-pane active" id="wsp-tool">
 
-            <div class='col-xs-2'>
-                <label class="control-label">Data Source: </label>
-                <select style='width: 100%;' data-role="ss" class='select2'>
-                </select>
-            </div>       
+            <form class="form-inline">
+                <div class='form-group'>
+                    <label class="control-label">Data Source: </label>
+                    <select class="form-control" style='width: 100%;' data-role="ss">
+                    </select>
+                </div>       
+            </form>
 
             {{#each box}}
                 <div class="boxes" id='{{box_id}}' style="display:none">

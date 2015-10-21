@@ -39,7 +39,6 @@ define([
                 '21',    //Bahrain
                 '74',    //South Sudan
                 '91',    //Gaza Strip
-                '102',   //Abyei
                 '117',   //Iran (Islamic Republic of)
                 '118',   //Iraq
                 '121',   //Israel
@@ -58,10 +57,7 @@ define([
                 '267',   //West Bank
                 '268',   //Western Sahara
                 '269',   //Yemen
-                '40760', //Hala'ib triangle
-                '40762', //Ma'tan al-Sarra
                 '40766', //Egypt
-                '61013'  //Ilemi triangle
             ];
 
         this.o = {
@@ -354,13 +350,17 @@ define([
             var selected = ( i == 0 )? " selected='selected'": '';
             this.o.$ss.append("<option value='" + this.o.box[i].id + selected +"'>" + this.o.box[i].title + "</option>");
         }
-        this.$placeholder.find('.select2').select2();
+        $('.select2').select2();
 
+        var _this = this;
         this.o.$ss.on('change', function(e) {
-            var id = $(this).find(":selected").val();
+            var id = $(this).find("option:selected").val();
             $('.boxes').hide();
-            $('#'+id).show();
-        })
+            $('#'+id).show(0);
+            var B =_.findWhere(_this.o.box, {id: id});
+            console.log(B)
+            B.m.invalidateSize();
+        });
 
         this.$tool =  this.$placeholder.find(this.o.s.tool);
         this.$landing =  this.$placeholder.find(this.o.s.landing);
