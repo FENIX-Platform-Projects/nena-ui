@@ -124,21 +124,12 @@ define([
 
             self.createRegion_DD(e.val);
 
-        });
-
-/*        this.$select_all.on('click', function() {
-
-            console.log("here");
-
-            self.$region_dd.find('option').prop('selected', true);
+            // amplify the selected codes
+            amplify.publish('nena.zonalsums.gaul0_selection', {
+                codes: e.val
+            });
 
         });
-
-        this.$deselect_all.on('click', function() {
-
-            self.$region_dd.find('option').prop('selected', false);
-
-        });*/
 
     };
 
@@ -174,8 +165,6 @@ define([
                 for(var i=0; i < self.o.cached_regions.data.length; i++) {
                     c.push(self.o.cached_regions.data[i].code)
                 }
-
-                console.log(c);
 
                 self.$region_dd.html(self.createDropdown(self.o.cached_regions));
 

@@ -12,6 +12,8 @@ define([
     'fx-wsp-ui/config/Services',
     'text!fx-wsp-ui/config/gaul1_ndvi_afg.json',
     'fx-wsp-ui/config/highcharts_template',
+    'zonalsum',
+    'zonalsumTable',
     'fenix-ui-map',
     'select2',
     'bootstrap',
@@ -26,7 +28,9 @@ define([
     ChartCreator,
     Services,
     ZonalStats,
-    HighchartsTemplate
+    HighchartsTemplate,
+    ZonalSumSelectors,
+    ZonalSumTable
 ) {
     'use strict';
 
@@ -281,6 +285,14 @@ define([
         }
     };
 
+    var s = {
+
+        ZONALSUM_SELECTORS: '#zonalsum_selectors',
+        ZONALSUM_TABLE: '#zonalsum_table',
+        BUTTON: '#button_zonalstat'
+
+    }
+
     WSP.prototype.init = function(config) {
         this.o = $.extend(true, {}, this.o, config);
         //this.o.data = $.parseJSON(data);
@@ -289,6 +301,35 @@ define([
 
         // render
         this.render(this.o.data);
+
+        // ZONALSUM
+        this.$zonasum_selectors = this.$placeholder.find(s.ZONALSUM_SELECTORS);
+        this.$zonasum_table = this.$placeholder.find(s.ZONALSUM_TABLE);
+        this.$button = this.$placeholder.find(s.BUTTON);
+
+        var zonalsum_selectors = new ZonalSumSelectors();
+        zonalsum_selectors.init({
+            'container': this.$zonasum_selectors
+        });
+
+        var table = new ZonalSumTable();
+        table.init({
+            'container': this.$zonasum_table
+        });
+
+
+        this.$button.on('click',function() {
+
+            var obj = zonalsum_selectors.getFilter();
+
+            obj.workspace = 'nena_mod13a3_anomaly';
+            obj.layerName = 'ndvi_anomaly_1km_mod13a3_200911_3857';
+
+            table.createTable(obj);
+
+        });
+
+
     };
 
     WSP.prototype.render = function(data) {
@@ -392,7 +433,7 @@ define([
                 // init map
                 this.o.box[i].m = this.initMap(this.o.box[i].$map);
 
-                // create charts on smap selection
+                // create charts on map selection
                 this.o.box[i].m.map.on('click', function (e) {
                     _this.createCharts(e.latlng.lat, e.latlng.lng);
                 }, {box: this.o.box[i]});
@@ -412,60 +453,10 @@ define([
                     _this.toggleLayerDate(e.data.box, 'zscoreLayer', e.data.box.zscoreLayerPrefix, "Z-Score");
                 });
 
-                // zonalstats_gaul1
-                this.o.box[i].$zonalStatsTable = this.o.box[i].$box.find('[data-role="zonalstats_gaul1_table"]');
-                this.o.box[i].$box.find('[data-role="zonalstats_gaul1"]').on('click', {box: this.o.box[i]}, function (e) {
-
-                    var box = e.data.box,
-                        $zonalStatsTable = box.$zonalStatsTable;
-
-                    if ( box.zonalStatVisible == false || box.zonalStatVisible === undefined) {
-
-                        box.zonalStatVisible = true;
-
-                        $zonalStatsTable.html('<div style="height:400px;"><i class="fa fa-spinner fa-spin fa-2x"></i><span> Loading ZonalStats</span></div>');
-
-                        setTimeout(function() {
-
-                            var table = $.parseJSON(ZonalStats),
-                                headers = Object.keys(table[0]);
-
-                            var div = '';
-                            div += '<h3>'+ i18n.zonalStatisticsTitle +'</h3>';
-                            div += '<table class="table table-striped table-hover">';
-                            div += '<thead><tr>';
-                            for (var i = 0; i < headers.length; i++) {
-                                div += "<th>" + i18n[headers[i]] + "</th>";
-                            }
-                            div += '</tr></thead>';
-
-                            div += '<tbody>';
-                            for (var i = 0; i < table.length; i++) {
-                                div += '<tr>';
-                                for (var j = 0; j < headers.length; j++) {
-                                    div += "<td>" + table[i][headers[j]] + "</td>";
-                                }
-                                div += '</tr>';
-                            }
-                            div += '</tbody>';
-                            div += '</table>';
-
-                            // load json and show table
-                            $zonalStatsTable.html(div);
-
-                        }, 2500);
-                    }
-
-                    else {
-                        box.zonalStatVisible = false;
-                        // hide table
-                        $zonalStatsTable.empty();
-                    }
-                });
-
                 // zoomTo
                 this.o.box[i].m.zoomTo("country", "adm0_code", this.o.countriesGaul0);
 
+                // logic for the external layers
                 _.keys(this.o.layers).forEach(_.bind(function (key) {
 
                     var $chk = this.o.box[i].$box.find('[data-role="' + key + '"]');
@@ -504,6 +495,8 @@ define([
         var layerName = box.$dd.find(":selected").val(),
             layer = this.getLayerByLayerName(layerName, box.cachedLayers),
             date = this.getYearMonthByLayer(layer);
+
+        console.log(layer);
 
         if (box[layerType] !== null && box[layerType] !== undefined) {
             box.m.removeLayer(box[layerType]);

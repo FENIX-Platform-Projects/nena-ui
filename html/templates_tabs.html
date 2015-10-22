@@ -50,13 +50,9 @@
                                 <h4>Administrative Boundaries</h4>
                                 <input type="checkbox" id="eco_region{{{box_id}}}" value=""><label data-role="eco_region" for="eco_region{{{box_id}}}">{{{eco_region}}}</label>
 
-                                {{#if this.addGaul1}}
-                                    <input type="checkbox" id="gaul1{{{box_id}}}" value=""><label data-role="gaul1" for="gaul1{{{box_id}}}">{{{gaul1}}}</label>
-                                {{/if}}
-                                {{#if this.addZonalStats}}
-                                    <h4>Zonalstats</h4>
-                                    <input type="checkbox" id="zonalstats_gaul1{{{box_id}}}" value=""><label data-role="zonalstats_gaul1" for="zonalstats_gaul1{{{box_id}}}">{{{zonalstats_gaul1}}}</label>
-                                {{/if}}
+                                <!--{{#if this.addGaul1}}-->
+                                    <!--<input type="checkbox" id="gaul1{{{box_id}}}" value=""><label data-role="gaul1" for="gaul1{{{box_id}}}">{{{gaul1}}}</label>-->
+                                <!--{{/if}}-->
                             </div>
                             <div class='col-xs-10'>
                                 <div data-role="map" style="height: 700px; overflow: hidden;"></div>
@@ -69,4 +65,13 @@
         </div>
         
     </div>
+
+
+    <!-- ZONALSUM -->
+    <div>
+        <div id="zonalsum_selectors"></div>
+        <div id="button_zonalstat" class="btn pull-right"><i class="fa fa-filter"></i>Button zonalsum</div>
+        <div id="zonalsum_table"></div>
+    </div>
+
 </script>
