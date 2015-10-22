@@ -17,6 +17,35 @@ define(function ( ) {
         //"url_d3s_resources_find_headers": { "full": true,  "dsd": true }
 
         "url_spatial_query": "http://fenix.fao.org/geo/fenix/spatialquery/db/spatial/query/",
-        "url_models_hostspot_crops": "http://fenix.fao.org/demo/fenix/geo/models/hotspot/crops/"
+        "url_models_hostspot_crops": "http://fenix.fao.org/demo/fenix/geo/models/hotspot/crops/",
+
+        "country_codes": [
+            "4",     //Algeria
+            "6",     //Sudan
+            "21",    //Bahrain
+            "74",    //South Sudan
+            "91",    //Gaza Strip
+            "117",   //Iran (Islamic Republic of)
+            "118",   //Iraq
+            "121",   //Israel
+            "130",   //Jordan
+            "137",   //Kuwait
+            "141",   //Lebanon
+            "145",   //Libya
+            "159",   //Mauritania
+            "169",   //Morocco
+            "187",   //Oman
+            "201",   //Qatar
+            "215",   //Saudi Arabia
+            "238",   //Syrian Arab Republic
+            "248",   //Tunisia
+            "255",   //United Arab Emirates
+            "267",   //West Bank
+            "268",   //Western Sahara
+            "269",   //Yemen
+            "40766",
+            "40765",
+            "117" // Iran
+        ]      
     };
 });

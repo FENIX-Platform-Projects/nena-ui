@@ -39,7 +39,8 @@ define(function() {
                 'jquery.hoverIntent': FENIX_CDN + '/js/jquery.hoverIntent/1.8.0/jquery.hoverIntent.min',
                 'select2': FENIX_CDN + '/js/select2/3.5.2/js/select2.min',
                 'bootstrap-toggle': 'https://gitcdn.github.io/bootstrap-toggle/2.2.0/js/bootstrap-toggle.min',
-
+                'moment':                      FENIX_CDN+'/js/moment/2.9.0/moment.min',
+                
                 'fenix-ui-map': FENIX_CDN + '/js/fenix-ui-map/0.0.1-fullscreen-fixed/fenix-ui-map.min',
                 'fenix-ui-map-config': FENIX_CDN + '/js/fenix-ui-map/0.0.1-fullscreen-fixed/fenix-ui-map-config',
 

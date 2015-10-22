@@ -20,7 +20,6 @@ define([
     'use strict';
 
     var s = {
-
         COUNTRY_DD: '#country_dd',
         REGION_DD: '#region_dd',
         BUTTON: '#button_zonalsum',
@@ -31,39 +30,13 @@ define([
 
     };
 
-
-    var country_codes = [
-        '4',     //Algeria
-        '6',     //Sudan
-        '21',    //Bahrain
-        '74',    //South Sudan
-        '91',    //Gaza Strip
-        '117',   //Iran (Islamic Republic of)
-        '118',   //Iraq
-        '121',   //Israel
-        '130',   //Jordan
-        '137',   //Kuwait
-        '141',   //Lebanon
-        '145',   //Libya
-        '159',   //Mauritania
-        '169',   //Morocco
-        '187',   //Oman
-        '201',   //Qatar
-        '215',   //Saudi Arabia
-        '238',   //Syrian Arab Republic
-        '248',   //Tunisia
-        '255',   //United Arab Emirates
-        '267',   //West Bank
-        '268',   //Western Sahara
-        '269',   //Yemen
-        '40766',
-        '40765',
-        '117' // Iran
-    ];
-
     var query = {
-        countries : "select adm0_code, adm0_name from spatial.gaul0_3857 where adm0_code IN (" + country_codes.join(',') + ") order by adm0_name",
-        regions : "select adm1_code, adm1_name from spatial.gaul1_3857 where adm0_code IN ({{codes}}) order by adm1_name",
+        countries : "select adm0_code, adm0_name from spatial.gaul0_3857 "+
+                    "where adm0_code IN (" + Services.country_codes.join(',') + ") "+
+                    "order by adm0_name",
+        regions:"select adm1_code, adm1_name from spatial.gaul1_3857 "+
+                "where adm0_code IN ({{codes}}) "+
+                "order by adm1_name",
     };
 
 

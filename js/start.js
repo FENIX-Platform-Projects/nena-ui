@@ -5,6 +5,7 @@ define([
     'underscore',
     'q',    
     'handlebars',
+    'moment',    
     //'text!fx-wsp-ui/html/structure.hbs',
     'text!fx-wsp-ui/html/templates_tabs.html',
     'i18n!fx-wsp-ui/nls/translate',
@@ -23,6 +24,7 @@ define([
     _,
     Q,    
     Handlebars,
+    moment,
     templates,
     i18n,
     ChartCreator,
@@ -36,33 +38,7 @@ define([
 
     function WSP() {
 
-        var layerPrefix = 'eco_',
-            countriesGaul0 = [
-                '4',     //Algeria
-                '6',     //Sudan
-                '21',    //Bahrain
-                //'74',    //South Sudan    //disputed
-                '91',    //Gaza Strip
-                '117',   //Iran (Islamic Republic of)
-                '118',   //Iraq
-                '121',   //Israel
-                '130',   //Jordan
-                '137',   //Kuwait
-                '141',   //Lebanon
-                '145',   //Libya
-                '159',   //Mauritania
-                '169',   //Morocco
-                '187',   //Oman
-                '201',   //Qatar
-                '215',   //Saudi Arabia
-                '238',   //Syrian Arab Republic
-                '248',   //Tunisia
-                '255',   //United Arab Emirates
-                '267',   //West Bank
-                '268',   //Western Sahara
-                '269',   //Yemen
-                '40766', //Egypt
-            ];
+        var layerPrefix = 'eco_';
 
         this.o = {
             lang: 'EN',
@@ -78,40 +54,30 @@ define([
             tool: {
                 init: false
             },
-            countriesGaul0: countriesGaul0,
-
             box: [
                 {
-                    id: 'mod13a3',
-                    title: i18n.ndvi_label,
-                    coverageSectorCode: 'nena_mod13a3',
+                    id: 'chirps',
+                    title: i18n.chirps,
+                    coverageSectorCode: 'chirps',
                     cachedLayers: [],
                     addZscore: true,
-                    addHotspot: true,
-                    addWheatAreaAFG: true,
-                    addGaul1: true,
-                    addZonalStats: true,
-                    anomalyLayerPrefix: 'nena_mod13a3_anomaly:ndvi_anomaly_1km_mod13a3',
-                    anomalyDPYLayerPrefix: 'nena_mod13a3_anomaly_dpy:ndvi_anomaly_dpy_1km_mod13a3',
-                    zscoreLayerPrefix: 'nena_mod13a3_zscore:ndvi_zscore_1km_mod13a3',
+                    anomalyLayerPrefix: 'chirps_anomaly:rainfall_anomaly_6km_chirps',
+                    anomalyDPYLayerPrefix: 'chirps_anomaly_dpy:rainfall_anomaly_dpy_6km_chirps',
+                    zscoreLayerPrefix: 'chirps_zscore:rainfall_zscore_6km_chirps',
                     averageLayerPrefix: {
-                        workspace: 'nena_mod13a3_avg',
-                        layerName: 'ndvi_average_1km_mod13a3'
+                        workspace: 'chirps_avg',
+                        layerName: 'rainfall_average_6km_chirps'
                     },
                     chart: {
-                        formula: '{{x}} / 10000',
                         chartObj: {
                             yAxis: {
                                 title: {
-                                    text: 'NDVI'
+                                    text: 'Rainfall (mm)'
                                 }
-                            },
-                            tooltip: {
-                                valueDecimals: 4
                             }
                         }
                     }
-                },            
+                },
                 {
                     id: 'myd11c3',
                     title: i18n.temperature,
@@ -160,26 +126,34 @@ define([
                             }
                         }
                     }
-                },
+                },       
                 {
-                    id: 'chirps',
-                    title: i18n.chirps,
-                    coverageSectorCode: 'chirps',
+                    id: 'mod13a3',
+                    title: i18n.ndvi_label,
+                    coverageSectorCode: 'nena_mod13a3',
                     cachedLayers: [],
                     addZscore: true,
-                    anomalyLayerPrefix: 'chirps_anomaly:rainfall_anomaly_6km_chirps',
-                    anomalyDPYLayerPrefix: 'chirps_anomaly_dpy:rainfall_anomaly_dpy_6km_chirps',
-                    zscoreLayerPrefix: 'chirps_zscore:rainfall_zscore_6km_chirps',
+                    addHotspot: true,
+                    addWheatAreaAFG: true,
+                    addGaul1: true,
+                    addZonalStats: true,
+                    anomalyLayerPrefix: 'nena_mod13a3_anomaly:ndvi_anomaly_1km_mod13a3',
+                    anomalyDPYLayerPrefix: 'nena_mod13a3_anomaly_dpy:ndvi_anomaly_dpy_1km_mod13a3',
+                    zscoreLayerPrefix: 'nena_mod13a3_zscore:ndvi_zscore_1km_mod13a3',
                     averageLayerPrefix: {
-                        workspace: 'chirps_avg',
-                        layerName: 'rainfall_average_6km_chirps'
+                        workspace: 'nena_mod13a3_avg',
+                        layerName: 'ndvi_average_1km_mod13a3'
                     },
                     chart: {
+                        formula: '{{x}} / 10000',
                         chartObj: {
                             yAxis: {
                                 title: {
-                                    text: 'Rainfall (mm)'
+                                    text: 'NDVI'
                                 }
+                            },
+                            tooltip: {
+                                valueDecimals: 4
                             }
                         }
                     }
@@ -230,11 +204,11 @@ define([
                 gaul1: {
                     workspace: 'fenix',
                     layerName: 'gaul1_3857',
-                    cql_filter: 'adm0_code IN ('+ countriesGaul0.join(',') +')',
+                    cql_filter: 'adm0_code IN ('+ Services.country_codes.join(',') +')',
                     style: 'gaul1_highlight_polygon',
                     openlegend: false,
-                    enabled: false,                    
-                    zindex:450
+                    enabled: true,                    
+                    zindex: 4500
                 },
                 hotspot: {
                     workspace: 'eco',
@@ -287,23 +261,23 @@ define([
     };
 
     var s = {
-
+        ZONALSUM_WRAP: '#zonalsum_wrap',
         ZONALSUM_SELECTORS: '#zonalsum_selectors',
         ZONALSUM_TABLE: '#zonalsum_table',
         BUTTON: '#button_zonalstat'
-
     }
 
     WSP.prototype.init = function(config) {
+
         this.o = $.extend(true, {}, this.o, config);
-        //this.o.data = $.parseJSON(data);
-        //this.o.cl.indicators = $.parseJSON(indicators);
+
         this.$placeholder = $(this.o.s.placeholder);
 
         // render
         this.render(this.o.data);
 
         // ZONALSUM
+        this.$zonasum_wrap = this.$placeholder.find(s.ZONALSUM_WRAP);
         this.$zonasum_selectors = this.$placeholder.find(s.ZONALSUM_SELECTORS);
         this.$zonasum_table = this.$placeholder.find(s.ZONALSUM_TABLE);
         this.$button = this.$placeholder.find(s.BUTTON);
@@ -383,112 +357,97 @@ define([
             //selectable_layers: i18n.selectable_layers
         };
         dynamic_data = $.extend(true, {}, dynamic_data, i18n);
-        var html = template(dynamic_data);
-        this.$placeholder.html(html);
+        
+        this.$placeholder.html( template(dynamic_data) );
 
         this.o.$ss = this.$placeholder.find('[data-role="ss"]');
 
-        for (var i = 0; i < this.o.box.length; i++) {
+        for(var i = 0; i < this.o.box.length; i++) {
             var selected = ( i == 0 )? " selected='selected'": '';
             this.o.$ss.append("<option value='" + this.o.box[i].id + selected +"'>" + this.o.box[i].title + "</option>");
         }
+
         $('.select2').select2();
 
         var _this = this;
         this.o.$ss.on('change', function(e) {
-            var id = $(this).find("option:selected").val();
-            $('.boxes').hide();
-            $('#'+id).show(0);
-            var B =_.findWhere(_this.o.box, {id: id});
-            console.log(B)
-            setTimeout(function() {
-                B.m.invalidateSize();
-            },200);
+            
+            var id = $(e.target).find("option:selected").val();
+
+            if(id==="mod13a3")
+                _this.$zonasum_wrap.show();
+            else
+                _this.$zonasum_wrap.hide();
+
+            console.log( _this.$placeholder.find('.boxes') );
+
+            _.each(_this.o.box, function(box) {
+                box.m.map.invalidateSize();
+            });
+
         });
+        
+        var _this = this;
+        for (var i = 0; i < this.o.box.length; i++)
+        {
+            this.o.box[i].$box = this.$placeholder.find('#' + this.o.box[i].id);
+            this.o.box[i].$dd = this.o.box[i].$box.find('[data-role="dd"]');
+            this.o.box[i].$map = this.o.box[i].$box.find('[data-role="map"]');
+            this.o.box[i].$chart = this.o.box[i].$box.find('[data-role="chart"]');
+            
+            if(i===0)
+                this.o.box[i].$box.show();
 
-        this.$tool =  this.$placeholder.find(this.o.s.tool);
-        this.$landing =  this.$placeholder.find(this.o.s.landing);
+            // init dropdown
+            this.o.box[i].$dd = this.o.box[i].$box.find('[data-role="dd"]');
+            this.fillDD(this.o.box[i]);
 
-        this.renderTool();
-    };
+            // init map
+            this.o.box[i].m = this.initMap(this.o.box[i].$map);
 
-    WSP.prototype.renderTool = function() {
+            // create charts on map selection
+            this.o.box[i].m.map.on('click', function (e) {
+                _this.createCharts(e.latlng.lat, e.latlng.lng);
+            }, {box: this.o.box[i]});
 
-        if (this.o.tool.init === false) {
-            var _this = this;
+            // anomaly
+            this.o.box[i].$box.find('[data-role="anomaly"]').on('click', {box: this.o.box[i]}, function (e) {
+                _this.toggleLayerDate(e.data.box, 'anomalyLayer', e.data.box.anomalyLayerPrefix, "Anomaly");
+            });
 
-            for (var i = 0; i < this.o.box.length; i++)
-            {
-                this.o.box[i].$box = this.$tool.find('#' + this.o.box[i].id);
-                this.o.box[i].$dd = this.o.box[i].$box.find('[data-role="dd"]');
-                this.o.box[i].$map = this.o.box[i].$box.find('[data-role="map"]');
-                this.o.box[i].$chart = this.o.box[i].$box.find('[data-role="chart"]');
-                
-                if(i===0)
-                    this.o.box[i].$box.show();
+            // anomaly dpy
+            this.o.box[i].$box.find('[data-role="anomaly_dpy"]').on('click', {box: this.o.box[i]}, function (e) {
+                _this.toggleLayerDate(e.data.box, 'anomalyDPYLayer', e.data.box.anomalyDPYLayerPrefix, "Anomaly DPY");
+            });
 
-                // init dropdown
-                this.o.box[i].$dd = this.o.box[i].$box.find('[data-role="dd"]');
-                this.fillDD(this.o.box[i]);
+            // zscore
+            this.o.box[i].$box.find('[data-role="zscore"]').on('click', {box: this.o.box[i]}, function (e) {
+                _this.toggleLayerDate(e.data.box, 'zscoreLayer', e.data.box.zscoreLayerPrefix, "Z-Score");
+            });
 
-                // init map
-                this.o.box[i].m = this.initMap(this.o.box[i].$map);
+            // logic for the external layers
+            _.keys(this.o.layers).forEach(_.bind(function (key) {
 
-                // create charts on map selection
-                this.o.box[i].m.map.on('click', function (e) {
-                    _this.createCharts(e.latlng.lat, e.latlng.lng);
-                }, {box: this.o.box[i]});
+                var $chk = this.o.box[i].$box.find('[data-role="' + key + '"]');
 
-                // anomaly
-                this.o.box[i].$box.find('[data-role="anomaly"]').on('click', {box: this.o.box[i]}, function (e) {
-                    _this.toggleLayerDate(e.data.box, 'anomalyLayer', e.data.box.anomalyLayerPrefix, "Anomaly");
+                $chk.on('click', {
+                    box: this.o.box[i],
+                    layers: this.o.layers[key]
+                }, function (e) {
+                    var box = e.data.box,
+                        layers = e.data.layers;
+
+                    _this.toggleLayer(box, key, layers, i18n[key]);
                 });
 
-                // anomaly dpy
-                this.o.box[i].$box.find('[data-role="anomaly_dpy"]').on('click', {box: this.o.box[i]}, function (e) {
-                    _this.toggleLayerDate(e.data.box, 'anomalyDPYLayer', e.data.box.anomalyDPYLayerPrefix, "Anomaly DPY");
-                });
+                if(_this.o.layers[key].startup)
+                    $chk.trigger('click');
 
-                // zscore
-                this.o.box[i].$box.find('[data-role="zscore"]').on('click', {box: this.o.box[i]}, function (e) {
-                    _this.toggleLayerDate(e.data.box, 'zscoreLayer', e.data.box.zscoreLayerPrefix, "Z-Score");
-                });
-
-                // zoomTo
-                this.o.box[i].m.zoomTo("country", "adm0_code", this.o.countriesGaul0);
-
-                // logic for the external layers
-                _.keys(this.o.layers).forEach(_.bind(function (key) {
-
-                    var $chk = this.o.box[i].$box.find('[data-role="' + key + '"]');
-
-                    $chk.on('click', {
-                        box: this.o.box[i],
-                        layers: this.o.layers[key]
-                    }, function (e) {
-                        var box = e.data.box,
-                            layers = e.data.layers;
-
-                        _this.toggleLayer(box, key, layers, i18n[key]);
-                    });
-
-                    if(_this.o.layers[key].startup)
-                        $chk.trigger('click');
-
-                }, this));
-            }
-
-            // sync maps
-            this.syncMaps(this.o.box);
-
-            this.o.tool.init = true;
-        }
-        else {
-            for (var i = 0; i < this.o.box.length; i++) {
-                this.o.box[i].m.invalidateSize();
-            }
+            }, this));
         }
 
+        // sync maps
+        this.syncMaps(this.o.box);
     };
 
 
@@ -496,8 +455,6 @@ define([
         var layerName = box.$dd.find(":selected").val(),
             layer = this.getLayerByLayerName(layerName, box.cachedLayers),
             date = this.getYearMonthByLayer(layer);
-
-        console.log(layer);
 
         if (box[layerType] !== null && box[layerType] !== undefined) {
             box.m.removeLayer(box[layerType]);
@@ -588,8 +545,17 @@ define([
                 // TODO build dropdown or display:none
                 var html = '';
                 for (var i=0; i < response.length; i++) {
-                    //var selected = ( i == 0 )? "selected='selected'": "";
-                    html += "<option value='" + response[i].dsd.layerName + "'>" + response[i].title[_this.o.lang] + "</option>";
+                    console.log(response[i].title[_this.o.lang])
+                    var title = response[i].title[_this.o.lang],
+                        name = title.split(' '),
+                        ym = name.pop(),
+                        /*year = ym.substr(0, 4),
+                        month = ym.substr(-2),*/
+                        //tit = name.join(' ')+'&nbsp; - &nbsp;'+ month +' '+ year;
+                        tit = moment(ym,'YYYYMM').format('YYYY MMMM');
+
+                    //console.log(year,month,tit)
+                    html += "<option value='" + response[i].dsd.layerName + "'>" + tit + "</option>";
                 }
                 box.cachedLayers = response;
                 $dd.append(html);
@@ -704,7 +670,6 @@ define([
         var cachedLayers = box.cachedLayers,
             $chart = box.$chart;
 
-        //$chart.empty();
         $chart.html('<div style="height:200px;"><i class="fa fa-spinner fa-spin fa-2x"></i><span> Loading '+ box.title +' Pixel Timeseries</span></div>');
 
         //$chart.slideDown('slow');
@@ -766,7 +731,6 @@ define([
                 }
             }
         });
-
     };
 
     WSP.prototype.addSerieToChart = function(chartObj, serie) {
@@ -863,24 +827,6 @@ define([
 
 
     WSP.prototype.initMap = function(c, fullscreenID) {
-    /*
-    TODO: new map is not working in fullscreen mode
-    var m = new FM.Map(c, {
-            plugins: {
-                zoomcontrol: 'bottomright',
-                disclaimerfao: true,
-                fullscreen: true,
-                geosearch: true,
-                mouseposition: false,
-                controlloading : true,
-                zoomResetControl: true
-            },
-            guiController: {
-                overlay: true,
-                baselayer: true,
-                wmsLoader: true
-            }
-        });*/
 
         var m = new FM.Map(c, {
             plugins: {
@@ -901,6 +847,7 @@ define([
             zoomControl: false,
             attributionControl: false
         });
+
         m.createMap();
 
         m.addLayer(new FM.layer({
@@ -923,6 +870,7 @@ define([
             hideLayerInControllerList: true
         }));
 
+        m.zoomTo("country", "adm0_code", Services.country_codes);
 
         return m;
     };
