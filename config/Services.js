@@ -15,5 +15,8 @@ define(function ( ) {
         "url_geostatistics_rasters_pixel": "http://fenix.fao.org/demo/fenix/geo/geostatistics/rasters/pixel/",
 
         //"url_d3s_resources_find_headers": { "full": true,  "dsd": true }
+
+        "url_spatial_query": "http://fenix.fao.org/geo/fenix/spatialquery/db/spatial/query/",
+        "url_models_hostspot_crops": "http://fenix.fao.org/demo/fenix/geo/models/hotspot/crops/"
     };
 });
