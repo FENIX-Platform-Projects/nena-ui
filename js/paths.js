@@ -1,6 +1,6 @@
 define(function() {
 
-    var FENIX_CDN = '//fenixapps.fao.org/repository',
+    var FENIX_CDN = '//fenixrepo.fao.org/cdn',
         SUBMODULES_CHARTS = '../submodule/fenix-ui-chart-creator/src/js/';
 
     var config = {
@@ -47,6 +47,11 @@ define(function() {
                 'fx-wsp-ui/html'  : '../html',
                 'fx-wsp-ui/config': '../config',
                 'fx-wsp-ui/nls'   : '../nls',
+
+                 // zonalsum
+                'fx-wsp-ui/zonalsum'   : './zonalsum',
+                'fx-wsp-ui/zonalsum_test'   : './zonalsum_test',
+                'fx-wsp-ui/zonalsumTable'   : './zonalsumTable',
 
                 // Chart Creator
                 'fx-c-c/start'  :  SUBMODULES_CHARTS + 'start',
