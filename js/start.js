@@ -79,6 +79,7 @@ define([
                 init: false
             },
             countriesGaul0: countriesGaul0,
+
             box: [
                 {
                     id: 'mod13a3',
