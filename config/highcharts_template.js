@@ -40,7 +40,8 @@ define(function () {
 
                 },
                 theme: {
-                    fill: '#FFFFFF', //Colore di background pulsante reset zoom
+                    //fill: '#FFFFFF', //Colore di background pulsante reset zoom
+                    fill: 'rgba(255,255,255,0.3)',
                     stroke: '#666666', //Colore di stroke pulsante reset zoom
                     width: 60, //Larghezza del pulsante reset
                     //r:0, //Smusso pulsante reset zoom

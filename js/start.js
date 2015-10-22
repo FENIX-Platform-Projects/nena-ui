@@ -37,7 +37,7 @@ define([
                 '4',     //Algeria
                 '6',     //Sudan
                 '21',    //Bahrain
-                '74',    //South Sudan
+                //'74',    //South Sudan    //disputed
                 '91',    //Gaza Strip
                 '117',   //Iran (Islamic Republic of)
                 '118',   //Iraq
@@ -212,7 +212,7 @@ define([
                     layerName: 'wheat_area_3857',
                     openlegend: true,
                     //style: 'Wheat_SAGE_harvested_area',
-                    enabled: false
+                    enabled: true
                 },
                 eco_region: {
                     workspace: 'fenix',
@@ -359,7 +359,9 @@ define([
             $('#'+id).show(0);
             var B =_.findWhere(_this.o.box, {id: id});
             console.log(B)
-            B.m.invalidateSize();
+            setTimeout(function() {
+                B.m.invalidateSize();
+            },200);
         });
 
         this.$tool =  this.$placeholder.find(this.o.s.tool);
@@ -709,7 +711,9 @@ define([
             $chart = box.$chart;
 
         //$chart.empty();
-        $chart.html('<div style="height:400px;"><i class="fa fa-spinner fa-spin fa-2x"></i><span> Loading '+ box.title +' Pixel Timeseries</span></div>');
+        $chart.html('<div style="height:200px;"><i class="fa fa-spinner fa-spin fa-2x"></i><span> Loading '+ box.title +' Pixel Timeseries</span></div>');
+
+        //$chart.slideDown('slow');
 
         box.chartObj = null;
 

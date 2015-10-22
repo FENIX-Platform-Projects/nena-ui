@@ -13,11 +13,11 @@
 
             {{#each box}}
                 <div class="boxes" id='{{box_id}}' style="display:none">
-                    <div class='row'>
+                    <!--div class='row'>
                         <div class='col-xs-12'>
                             <h1>{{{box_title}}}</h1>
                         </div>
-                    </div>
+                    </div-->
                     <div class='row'>             
                         <div class='col-xs-2'>
                             <select style='width: 100%;' data-role="dd" class='select2'>
@@ -45,7 +45,7 @@
                                 <input type="checkbox" id="cultivated_land_gaez_2010{{{box_id}}}" value=""><label data-role="cultivated_land_gaez_2010" for="cultivated_land_gaez_2010{{{box_id}}}">{{{cultivated_land_gaez_2010}}}</label>
                                 <input type="checkbox" id="irrigated_areas_solaw_2012{{{box_id}}}" value=""><label data-role="irrigated_areas_solaw_2012" for="irrigated_areas_solaw_2012{{{box_id}}}">{{{irrigated_areas_solaw_2012}}}</label>
                                 <input type="checkbox" id="rainfed_land_gaez{{{box_id}}}" value=""><label data-role="rainfed_land_gaez" for="rainfed_land_gaez{{{box_id}}}">{{{rainfed_land_gaez}}}</label>
-                                <!--input type="checkbox" id="wheat{{{box_id}}}" value=""><label data-role="wheat" for="wheat{{{box_id}}}">{{{wheat}}}</label-->
+                                <input type="checkbox" id="wheat{{{box_id}}}" value=""><label data-role="wheat" for="wheat{{{box_id}}}">{{{wheat}}}</label>
 
                                 <h4>Administrative Boundaries</h4>
                                 <input type="checkbox" id="eco_region{{{box_id}}}" value=""><label data-role="eco_region" for="eco_region{{{box_id}}}">{{{eco_region}}}</label>
@@ -59,13 +59,7 @@
                                 {{/if}}
                             </div>
                             <div class='col-xs-10'>
-                                <div data-role="map" style="height: 600px; overflow: hidden;"></div>
-                                <br>
-                                <div data-role="chart"></div>
-                                {{#if this.addZonalStats}}
-                                    <br>
-                                    <div data-role="zonalstats_gaul1_table"></div>
-                                {{/if}}
+                                <div data-role="map" style="height: 700px; overflow: hidden;"></div>
                             </div>
                         </div>
                     </div>
