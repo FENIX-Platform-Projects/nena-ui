@@ -126,13 +126,13 @@ define([
                             }
                         }
                     }
-                },       
+                },
                 {
                     id: 'mod13a3',
                     title: i18n.ndvi_label,
                     coverageSectorCode: 'nena_mod13a3',
                     cachedLayers: [],
-                    addZscore: true,
+                    addZscore: false,
                     addHotspot: true,
                     addWheatAreaAFG: true,
                     addGaul1: true,
@@ -374,6 +374,7 @@ define([
             
             var id = $(e.target).find("option:selected").val();
 
+            //ONLY NDVI
             if(id==="mod13a3")
                 _this.$zonasum_wrap.show();
             else
@@ -384,7 +385,6 @@ define([
             _.each(_this.o.box, function(box) {
                 box.m.map.invalidateSize();
             });
-
         });
         
         var _this = this;
@@ -394,7 +394,7 @@ define([
             this.o.box[i].$dd = this.o.box[i].$box.find('[data-role="dd"]');
             this.o.box[i].$map = this.o.box[i].$box.find('[data-role="map"]');
             this.o.box[i].$chart = this.o.box[i].$box.find('[data-role="chart"]');
-            
+
             if(i===0)
                 this.o.box[i].$box.show();
 
