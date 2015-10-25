@@ -4,32 +4,25 @@ define(function() {
         SUBMODULES_CHARTS = '../submodule/fenix-ui-chart-creator/src/js/';
 
     var config = {
-
-
-            //Set the config for the i18n
             i18n: {
                 locale: 'en'
             },
-
-            // The path where your JavaScripts are located
             baseUrl: 'js/',
-
-            // Specify the paths of vendor libraries
             paths: {
-                jquery:     FENIX_CDN + "/js/jquery/2.1.1/jquery.min",
-                domReady:   FENIX_CDN + "/js/requirejs/plugins/domready/2.0.1/domReady",
-                i18n:       FENIX_CDN + "/js/requirejs/plugins/i18n/2.0.4/i18n",
-                text:       FENIX_CDN + "/js/requirejs/plugins/text/2.0.12/text",
-                bootstrap:  FENIX_CDN + "/js/bootstrap/3.3.4/js/bootstrap.min",
-                chosen:     FENIX_CDN + "/js/chosen/1.2.0/chosen.jquery.min",
-                csvjson:    FENIX_CDN + "/js/csvjson/1.0/csvjson",
-                underscore: FENIX_CDN + "/js/underscore/1.7.0/underscore.min",
-                handlebars: FENIX_CDN + "/js/handlebars/2.0.0/handlebars",
-                sweetAlert: FENIX_CDN + '/js/sweet-alert/0.4.2/sweet-alert',
-                q:          FENIX_CDN + '/js/q/1.1.2/q',                                
-                amplify:    FENIX_CDN + "/js/amplify/1.1.2/amplify.min",                
-                highcharts: FENIX_CDN + "/js/highcharts/4.0.4/js/highcharts", //'//code.highcharts.com/highcharts',
-                'highcharts-export': 'http://code.highcharts.com/modules/exporting',
+                jquery:       FENIX_CDN + "/js/jquery/2.1.1/jquery.min",
+                domReady:     FENIX_CDN + "/js/requirejs/plugins/domready/2.0.1/domReady",
+                i18n:         FENIX_CDN + "/js/requirejs/plugins/i18n/2.0.4/i18n",
+                text:         FENIX_CDN + "/js/requirejs/plugins/text/2.0.12/text",
+                bootstrap:    FENIX_CDN + "/js/bootstrap/3.3.4/js/bootstrap.min",
+                chosen:       FENIX_CDN + "/js/chosen/1.2.0/chosen.jquery.min",
+                csvjson:      FENIX_CDN + "/js/csvjson/1.0/csvjson",
+                underscore:   FENIX_CDN + "/js/underscore/1.7.0/underscore.min",
+                handlebars:   FENIX_CDN + "/js/handlebars/2.0.0/handlebars",
+                sweetAlert:   FENIX_CDN + '/js/sweet-alert/0.4.2/sweet-alert',
+                q:            FENIX_CDN + '/js/q/1.1.2/q',                                
+                amplify:      FENIX_CDN + "/js/amplify/1.1.2/amplify.min",                
+                highcharts:   FENIX_CDN + "/js/highcharts/4.0.4/js/highcharts", //'//code.highcharts.com/highcharts',
+                'highcharts-export':     FENIX_CDN+ '/js/highcharts/4.0.4/js/modules/exporting',
                 'highcharts-export-csv': 'http://highslide-software.github.io/export-csv/export-csv',
 
                 // fenix-map-js
