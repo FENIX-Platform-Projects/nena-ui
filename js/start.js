@@ -40,7 +40,7 @@ define([
 
         this.o = {
             lang: 'EN',
-            prefix: 'wsp_ui_',
+            prefix: Services.layerPrefix,
             s: {
                 placeholder: '#content'
             },
@@ -173,14 +173,9 @@ define([
 
         var dynamic_data = {
             box: this.o.box,
-            wsp: i18n.wsp,
-            //wheat: i18n.wheat,
-            //population_landscan: i18n.population_landscan,
-            //rainfed_land_gaez:  i18n.rainfed_land_gaez,
-            //irrigated_areas_solaw_2012:  i18n.irrigated_areas_solaw_2012,
-            //cultivated_land_gaez_2010:  i18n.cultivated_land_gaez_2010,
-            //selectable_layers: i18n.selectable_layers
+            wsp: i18n.wsp
         };
+
         dynamic_data = $.extend(true, {}, dynamic_data, i18n);
         
         this.$placeholder.html( template(dynamic_data) );
@@ -188,43 +183,50 @@ define([
         this.o.$ss = this.$placeholder.find('[data-role="ss"]');
 
         for(var i = 0; i < this.o.box.length; i++) {
-            var selected = ( i == 0 )? " selected='selected'": '';
-            this.o.$ss.append("<option value='" + this.o.box[i].id + selected +"'>" + this.o.box[i].title + "</option>");
+            var sel = (i===0)?"checked":'',
+            	id = this.o.box[i].id,
+            	tit = this.o.box[i].title;
+            this.o.$ss.append('<input type="radio" name="ss" id="ss'+id+'" value="'+id+'" '+sel+' /><label for="ss'+id+'"> '+tit+'</label><br />');
         }
 
-        $('.select2').select2();
-
         var _this = this;
-        this.o.$ss.on('change', function(e) {
+        this.o.$ss.on('change','input[type=radio]', function(e) {
             
-            var id = $(e.target).find("option:selected").val();
+            var id = $(e.target).val();
 
             //ONLY NDVI
             if(id==="mod13a3")
-                _this.$zonasum_wrap.show();
+                _this.$zonasum_wrap.slideDown();
             else
-                _this.$zonasum_wrap.hide();
+                _this.$zonasum_wrap.slideUp();
 
-            console.log( _this.$placeholder.find('.boxes') );
 
             _.each(_this.o.box, function(box) {
-                box.m.map.invalidateSize();
+            	$('#box'+box.id).hide();
             });
+            $('#box'+id).show(0, function() {
+            	var bmap = _.findWhere(_this.o.box,{id: id}).m.map;
+            	bmap.invalidateSize();
+            });
+            
+
+            //$('#box'+id).prependTo(_this.$placeholder.find('#boxes_wrap'))
         });
         
         var _this = this;
         for (var i = 0; i < this.o.box.length; i++)
         {
-            this.o.box[i].$box = this.$placeholder.find('#' + this.o.box[i].id);
+            this.o.box[i].$box = this.$placeholder.find('#box' + this.o.box[i].id);
             this.o.box[i].$dd = this.o.box[i].$box.find('[data-role="dd"]');
             this.o.box[i].$map = this.o.box[i].$box.find('[data-role="map"]');
             this.o.box[i].$chart = this.o.box[i].$box.find('[data-role="chart"]');
 
-            if(i===0)
-                this.o.box[i].$box.show();
+            if(i>0)
+				this.o.box[i].$box.hide();
 
             // init dropdown
             this.o.box[i].$dd = this.o.box[i].$box.find('[data-role="dd"]');
+            
             this.fillDD(this.o.box[i]);
 
             // init map
@@ -368,29 +370,20 @@ define([
             crossDomain: true,
             success : function(response) {
                 // TODO build dropdown or display:none
-                var html = '';
                 for (var i=0; i < response.length; i++) {
-                    //console.log(response[i].title[_this.o.lang])
                     var title = response[i].title[_this.o.lang],
                         name = title.split(' '),
                         ym = name.pop(),
-                        /*year = ym.substr(0, 4),
-                        month = ym.substr(-2),*/
-                        //tit = name.join(' ')+'&nbsp; - &nbsp;'+ month +' '+ year;
                         tit = moment(ym,'YYYYMM').format('YYYY MMMM');
-
-                    //console.log(year,month,tit)
-                    html += "<option value='" + response[i].dsd.layerName + "'>" + tit + "</option>";
+                    $dd.append("<option value='" + response[i].dsd.layerName + "'>" + tit + "</option>");
                 }
                 box.cachedLayers = response;
-                $dd.append(html);
 
                 // load layer
                 $dd.on('change',{box: box}, function(e) {
                     _this.onDDSelection(e.data.box, $(this).find(":selected").val());
                 });
 
-                //console.log($dd.select2().select2('val', $('.select2 option:eq(0)').val()));
                 $dd.select2().select2('val', $dd.find('option:eq(0)').val(), true);
             },
             error : function(err, b, c) {
@@ -730,13 +723,13 @@ define([
 
         // Don't eval if our replace function flagged as invalid
         if (!valid) {
-            alert("Invalid arithmetic expression");
+            console.warn("Invalid arithmetic expression");
         }
         else {
             try {
                return eval(exp);
             } catch (e) {
-                alert("Invalid arithmetic expression");
+                console.warn("Invalid arithmetic expression");
             }
         }
     }

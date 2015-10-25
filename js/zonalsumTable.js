@@ -105,10 +105,6 @@ define([
             request = query.hotspot,
             self = this;
 
-
-        console.log(obj);
-
-
         _.forEach(obj.codes, function(c) {
 
             _.forEach(c.split(","), function(code) {

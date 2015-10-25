@@ -1,58 +1,57 @@
 <script type='text/x-handlebars-template' id='wsp_ui_structure'>
 
-    <div class="container-fluid" style="margin-top:3px;">
+    <div class="container-fluid" style="margin-top:3px;position:relative">
 
-        <form class="form-inline">
-            <div class='form-group'>
-                <label class="control-label">Data Source: </label>
-                <select class="form-control" style='width: 100%;' data-role="ss">
-                </select>
-            </div>
-        </form>
-
-        {{#each box}}
-        <div class="boxes" id='{{box_id}}'>
-            <h1 class="text-center">{{title}}</h1>
-            <div class='row'>             
-                <div class='col-xs-2'>
-                    <select style='width: 100%;' data-role="dd" class='select2'>
-                    </select>
-                </div>
-                <div class='col-xs-2'>
-                    <input type="checkbox" id="anomaly{{{box_id}}}" value=""><label data-role="anomaly" for="anomaly{{{box_id}}}">{{{anomaly}}}</label>
-                </div>
-                <div class='col-xs-2'>
-                    <input type="checkbox" id="anomaly_dpy{{{box_id}}}" value=""><label data-role="anomaly_dpy" for="anomaly_dpy{{{box_id}}}">{{{anomaly_dpy}}}</label>
-                </div>
-                {{#if this.addZscore}}
-                    <div class='col-xs-2'>
-                        <input type="checkbox" id="zscore{{{box_id}}}" value=""><label data-role="zscore" for="zscore{{{box_id}}}">{{{z_score}}}</label>
-                    </div>
-                {{/if}}
-            </div>
-            <br />
-            <div data-role='box-content' data-role="chart-content">
-                <div class='row'>
-                    <div class='col-xs-2'>
-                        <h4>{{{selectable_layers}}}</h4>
-
-                        <input type="checkbox" id="population_landscan{{{box_id}}}" value=""><label data-role="population_landscan" for="population_landscan{{{box_id}}}">{{{population_landscan}}}</label>
-                        <input type="checkbox" id="cultivated_land_gaez_2010{{{box_id}}}" value=""><label data-role="cultivated_land_gaez_2010" for="cultivated_land_gaez_2010{{{box_id}}}">{{{cultivated_land_gaez_2010}}}</label>
-                        <input type="checkbox" id="irrigated_areas_solaw_2012{{{box_id}}}" value=""><label data-role="irrigated_areas_solaw_2012" for="irrigated_areas_solaw_2012{{{box_id}}}">{{{irrigated_areas_solaw_2012}}}</label>
-                        <input type="checkbox" id="rainfed_land_gaez{{{box_id}}}" value=""><label data-role="rainfed_land_gaez" for="rainfed_land_gaez{{{box_id}}}">{{{rainfed_land_gaez}}}</label>
-                        <input type="checkbox" id="wheat{{{box_id}}}" value=""><label data-role="wheat" for="wheat{{{box_id}}}">{{{wheat}}}</label>
-
-                        <h4>Administrative Boundaries</h4>
-                        <input type="checkbox" id="eco_region{{{box_id}}}" value=""><label data-role="eco_region" for="eco_region{{{box_id}}}">{{{eco_region}}}</label>
-                        <input type="checkbox" id="gaul1{{{box_id}}}" value=""><label data-role="gaul1" for="gaul1{{{box_id}}}">{{{gaul1}}}</label>
-                    </div>
-                    <div class='col-xs-10'>
-                        <div data-role="map" style="height:600px; overflow: hidden;"></div>
-                    </div>
-                </div>
+        <div class="thematic-layers">        
+            <h4>Thematic layers</h4>
+            <div class="form-group" data-role="ss">
             </div>
         </div>
+
+        <div id="boxes_wrap">
+        {{#each box}}
+	        <div class="boxes" id="box{{box_id}}">
+	            <div class='row'>             
+	                <div class='col-xs-2'>
+	                    <select style='width: 100%;' data-role="dd" class='select2'>
+	                    </select>
+	                </div>
+	                <div class='col-xs-2'>
+	                    <input type="checkbox" id="anomaly{{{box_id}}}" value=""><label data-role="anomaly" for="anomaly{{{box_id}}}">{{{anomaly}}}</label>
+	                </div>
+	                <div class='col-xs-2'>
+	                    <input type="checkbox" id="anomaly_dpy{{{box_id}}}" value=""><label data-role="anomaly_dpy" for="anomaly_dpy{{{box_id}}}">{{{anomaly_dpy}}}</label>
+	                </div>
+	                {{#if this.addZscore}}
+	                    <div class='col-xs-2'>
+	                        <input type="checkbox" id="zscore{{{box_id}}}" value=""><label data-role="zscore" for="zscore{{{box_id}}}">{{{z_score}}}</label>
+	                    </div>
+	                {{/if}}
+	            </div>
+	            <br />
+	            <div data-role='box-content' data-role="chart-content">
+	                <div class='row'>
+	                    <div class='col-xs-2 select-layers'>
+	                        <h4>{{{selectable_layers}}}</h4>
+
+	                        <input type="checkbox" id="population_landscan{{{box_id}}}" value=""><label data-role="population_landscan" for="population_landscan{{{box_id}}}">{{{population_landscan}}}</label>
+	                        <input type="checkbox" id="cultivated_land_gaez_2010{{{box_id}}}" value=""><label data-role="cultivated_land_gaez_2010" for="cultivated_land_gaez_2010{{{box_id}}}">{{{cultivated_land_gaez_2010}}}</label>
+	                        <input type="checkbox" id="irrigated_areas_solaw_2012{{{box_id}}}" value=""><label data-role="irrigated_areas_solaw_2012" for="irrigated_areas_solaw_2012{{{box_id}}}">{{{irrigated_areas_solaw_2012}}}</label>
+	                        <input type="checkbox" id="rainfed_land_gaez{{{box_id}}}" value=""><label data-role="rainfed_land_gaez" for="rainfed_land_gaez{{{box_id}}}">{{{rainfed_land_gaez}}}</label>
+	                        <input type="checkbox" id="wheat{{{box_id}}}" value=""><label data-role="wheat" for="wheat{{{box_id}}}">{{{wheat}}}</label>
+
+	                        <h4>Administrative Boundaries</h4>
+	                        <input type="checkbox" id="eco_region{{{box_id}}}" value=""><label data-role="eco_region" for="eco_region{{{box_id}}}">{{{eco_region}}}</label>
+	                        <input type="checkbox" id="gaul1{{{box_id}}}" value=""><label data-role="gaul1" for="gaul1{{{box_id}}}">{{{gaul1}}}</label>
+	                    </div>
+	                    <div class='col-xs-10'>
+	                        <div data-role="map" style="height:500px;overflow:hidden;"></div>
+	                    </div>
+	                </div>
+	            </div>
+	        </div>
         {{/each}}
+        </div>
         
     </div>
 
@@ -64,7 +63,7 @@
             </div>
         </div>
         <div id="zonalsum_selectors"></div>
-        <div id="button_zonalstat" class="btn pull-right"><i class="fa fa-filter"></i>Button zonalsum</div>
+        <div id="button_zonalstat" class="btn btn-default pull-right"><i class="fa fa-filter"></i>Button zonalsum</div>
         <div id="zonalsum_table"></div>
     </div>
 

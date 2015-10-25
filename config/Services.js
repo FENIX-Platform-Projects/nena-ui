@@ -81,11 +81,11 @@ define(['i18n!fx-wsp-ui/nls/translate'], function (i18n) {
                 cachedLayers: [],
                 selectedLayer: null,
                 addZscore: true,
-                anomalyLayerPrefix: layerPrefix+'myd11c3_anomaly:lst_anomaly_6km_myd11c3',
-                anomalyDPYLayerPrefix: layerPrefix+'myd11c3_anomaly_dpy:lst_anomaly_dpy_6km_myd11c3',
-                zscoreLayerPrefix: layerPrefix+'myd11c3_zscore:lst_zscore_6km_myd11c3',
+                anomalyLayerPrefix: 'eco_myd11c3_anomaly:lst_anomaly_6km_myd11c3',
+                anomalyDPYLayerPrefix: 'eco_myd11c3_anomaly_dpy:lst_anomaly_dpy_6km_myd11c3',
+                zscoreLayerPrefix: 'eco_myd11c3_zscore:lst_zscore_6km_myd11c3',
                 averageLayerPrefix: {
-                    workspace: layerPrefix+'myd11c3_avg',
+                    workspace: 'eco_myd11c3_avg',
                     layerName: 'lst_average_6km_myd11c3'
                 },
                 chart: {
