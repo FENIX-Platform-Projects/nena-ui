@@ -545,7 +545,7 @@ define([
                 // TODO build dropdown or display:none
                 var html = '';
                 for (var i=0; i < response.length; i++) {
-                    console.log(response[i].title[_this.o.lang])
+                    //console.log(response[i].title[_this.o.lang])
                     var title = response[i].title[_this.o.lang],
                         name = title.split(' '),
                         ym = name.pop(),
