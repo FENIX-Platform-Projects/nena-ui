@@ -89,10 +89,13 @@ define([
         ZONALSUM_WRAP: '#zonalsum_wrap',
         ZONALSUM_SELECTORS: '#zonalsum_selectors',
         ZONALSUM_TABLE: '#zonalsum_table',
-        BUTTON: '#button_zonalstat'
+        BUTTON: '#button_zonalstat',
+        WRAPCHART: '#charts_wrap'
     }
 
     WSP.prototype.init = function(config) {
+
+        var _this = this;
 
         this.o = $.extend(true, {}, this.o, config);
 
@@ -106,6 +109,7 @@ define([
         this.$zonasum_selectors = this.$placeholder.find(s.ZONALSUM_SELECTORS);
         this.$zonasum_table = this.$placeholder.find(s.ZONALSUM_TABLE);
         this.$button = this.$placeholder.find(s.BUTTON);
+        this.$wrapchart = this.$placeholder.find(s.WRAPCHART);
 
         var zonalsum_selectors = new ZonalSumSelectors();
         zonalsum_selectors.init({
@@ -129,6 +133,11 @@ define([
 
         });
 
+        this.$wrapchart.on('click','.close', function(e) {
+            _this.$wrapchart.slideUp();
+        });
+
+        
 
     };
 
@@ -221,7 +230,7 @@ define([
             //this.o.box[i].$chart = this.o.box[i].$box.find('[data-role="chart"]');
             this.o.box[i].$chart = this.$placeholder.find('#chart' + this.o.box[i].id);
 
-            if(i>0)
+            if(i > 0)
 				this.o.box[i].$box.hide();
 
             // init dropdown
@@ -234,6 +243,7 @@ define([
 
             // create charts on map selection
             this.o.box[i].m.map.on('click', function (e) {
+                _this.$wrapchart.slideDown();
                 _this.createCharts(e.latlng.lat, e.latlng.lng);
             }, {box: this.o.box[i]});
 
@@ -687,7 +697,7 @@ define([
             lang: 'en',
             hideLayerInControllerList: true
         }));
-        
+
         return m;
     };
 
