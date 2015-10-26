@@ -208,8 +208,6 @@ define([
             	var bmap = _.findWhere(_this.o.box,{id: id}).m.map;
             	bmap.invalidateSize();
             });
-            
-
             //$('#box'+id).prependTo(_this.$placeholder.find('#boxes_wrap'))
         });
         
@@ -668,7 +666,7 @@ define([
             attributionControl: false
         });
 
-        m.createMap();
+        m.createMap(Services.lat, Services.lng, Services.zoom);
 
         m.addLayer(new FM.layer({
             layers: 'fenix:uncs_lakes_3857',
@@ -689,9 +687,7 @@ define([
             lang: 'en',
             hideLayerInControllerList: true
         }));
-
-        m.zoomTo("country", "adm0_code", Services.country_codes);
-
+        
         return m;
     };
 

@@ -50,6 +50,9 @@ define(['i18n!fx-wsp-ui/nls/translate'], function (i18n) {
         "url_models_hostspot_crops": "http://fenix.fao.org/demo/fenix/geo/models/hotspot/crops/",
 
         "country_codes": country_codes,
+        "lat": 22.187404991398775,
+        "lng": 24.9169921875,
+        "zoom": 4,
         "boxes": [
             {
                 id: 'chirps',
