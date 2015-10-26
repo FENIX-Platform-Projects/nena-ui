@@ -126,7 +126,7 @@ define([
 
         amplify.subscribe('nena.zonalsums.gaul0_selection', function(e) {
             //only NDVI
-            
+            var box = _.last(_this.o.box);
             box.m.zoomTo("country", "adm0_code", e.codes);
         });
 
