@@ -9,9 +9,10 @@ define([
     //'text!fx-wsp-ui/html/structure.hbs',
     'text!fx-wsp-ui/html/templates_tabs.html',
     'i18n!fx-wsp-ui/nls/translate',
+
     'fx-c-c/start',
     'fx-wsp-ui/config/Services',
-    'text!fx-wsp-ui/config/gaul1_ndvi_afg.json',
+    //'text!fx-wsp-ui/config/gaul1_ndvi_afg.json',
     'fx-wsp-ui/config/highcharts_template',
     'zonalsum',
     'zonalsumTable',
@@ -29,7 +30,7 @@ define([
     i18n,
     ChartCreator,
     Services,
-    ZonalStats,
+    //ZonalStats,
     HighchartsTemplate,
     ZonalSumSelectors,
     ZonalSumTable
@@ -115,14 +116,19 @@ define([
 
         var zonalsum_selectors = new ZonalSumSelectors();
         zonalsum_selectors.init({
-            'container': this.$zonasum_selectors
+            container: this.$zonasum_selectors
         });
 
         var table = new ZonalSumTable();
         table.init({
-            'container': this.$zonasum_table
+            container: this.$zonasum_table
         });
 
+        amplify.subscribe('nena.zonalsums.gaul0_selection', function(e) {
+            //only NDVI
+            
+            box.m.zoomTo("country", "adm0_code", e.codes);
+        });
 
         this.$button.on('click',function() {
 
@@ -212,8 +218,10 @@ define([
             //ONLY NDVI
             if(id==="mod13a3")
                 _this.$zonasum_wrap_open.show();
-            else
+            else {
+                _this.$zonasum_wrap.slideUp();
                 _this.$zonasum_wrap_open.hide();
+            }
 
 
             _.each(_this.o.box, function(box) {
