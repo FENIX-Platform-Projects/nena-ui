@@ -87,6 +87,7 @@ define([
 
     var s = {
         ZONALSUM_WRAP: '#zonalsum_wrap',
+        ZONALSUM_WRAP_OPEN: '#zonalsum_wrap_open',
         ZONALSUM_SELECTORS: '#zonalsum_selectors',
         ZONALSUM_TABLE: '#zonalsum_table',
         BUTTON: '#button_zonalstat',
@@ -109,6 +110,7 @@ define([
         this.$zonasum_selectors = this.$placeholder.find(s.ZONALSUM_SELECTORS);
         this.$zonasum_table = this.$placeholder.find(s.ZONALSUM_TABLE);
         this.$button = this.$placeholder.find(s.BUTTON);
+        this.$zonasum_wrap_open = this.$placeholder.find(s.ZONALSUM_WRAP_OPEN);
         this.$wrapchart = this.$placeholder.find(s.WRAPCHART);
 
         var zonalsum_selectors = new ZonalSumSelectors();
@@ -133,8 +135,12 @@ define([
 
         });
 
-        this.$wrapchart.on('click','.close', function(e) {
-            _this.$wrapchart.slideUp();
+        this.$zonasum_wrap_open.on('click', function(e) {
+            _this.$zonasum_wrap.slideDown();
+        });
+
+        this.$placeholder.on('click','.close', function(e) {
+            $(e.target).parent().slideUp();
         });
 
         
@@ -205,9 +211,9 @@ define([
 
             //ONLY NDVI
             if(id==="mod13a3")
-                _this.$zonasum_wrap.slideDown();
+                _this.$zonasum_wrap_open.show();
             else
-                _this.$zonasum_wrap.slideUp();
+                _this.$zonasum_wrap_open.hide();
 
 
             _.each(_this.o.box, function(box) {
