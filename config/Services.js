@@ -148,7 +148,7 @@ define(['i18n!fx-wsp-ui/nls/translate'], function (i18n) {
                     chartObj: {
                         yAxis: {
                             title: {
-                                text: 'NDVI'
+                                text: 'Vegetation Index (NDVI)'
                             }
                         },
                         tooltip: {
