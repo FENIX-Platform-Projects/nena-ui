@@ -45,7 +45,8 @@
 	                        <input type="checkbox" id="gaul1{{{box_id}}}" value=""><label data-role="gaul1" for="gaul1{{{box_id}}}">{{{gaul1}}}</label>
 	                    </div>
 	                    <div class='col-xs-10'>
-	                        <div data-role="map" style="height:500px;overflow:hidden;"></div>
+	                        <div data-role="map" style="height:500px;overflow:hidden;">
+	                        </div>
 	                    </div>
 	                </div>
 	            </div>
@@ -55,7 +56,14 @@
         
     </div>
 
-    <!-- ZONALSUM -->
+	<div id="charts_wrap"  style="display:none" class="container-fluid">
+		{{#each box}}
+			<div class="boxchart col-xs-6" id="chart{{box_id}}">
+			</div>
+		{{/each}}
+		<a class="close">&times;</a>
+	</div>
+
     <div id="zonalsum_wrap"  style="display:none" class="container-fluid">
         <div class='row'>
             <div class='col-xs-12'>

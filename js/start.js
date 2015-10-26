@@ -219,14 +219,16 @@ define([
             this.o.box[i].$box = this.$placeholder.find('#box' + this.o.box[i].id);
             this.o.box[i].$dd = this.o.box[i].$box.find('[data-role="dd"]');
             this.o.box[i].$map = this.o.box[i].$box.find('[data-role="map"]');
-            this.o.box[i].$chart = this.o.box[i].$box.find('[data-role="chart"]');
+            
+            //this.o.box[i].$chart = this.o.box[i].$box.find('[data-role="chart"]');
+            this.o.box[i].$chart = this.$placeholder.find('#chart' + this.o.box[i].id);
 
             if(i>0)
 				this.o.box[i].$box.hide();
 
             // init dropdown
             this.o.box[i].$dd = this.o.box[i].$box.find('[data-role="dd"]');
-            
+
             this.fillDD(this.o.box[i]);
 
             // init map
@@ -488,7 +490,7 @@ define([
         var cachedLayers = box.cachedLayers,
             $chart = box.$chart;
 
-        $chart.html('<div style="height:200px;"><i class="fa fa-spinner fa-spin fa-2x"></i><span> Loading '+ box.title +' Pixel Timeseries</span></div>');
+        $chart.html('<div style="height:100px;with:50%"><i class="fa fa-spinner fa-spin fa-2x"></i><span> Loading '+ box.title +' Pixel Timeseries</span></div>');
 
         //$chart.slideDown('slow');
 
