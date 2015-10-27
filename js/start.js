@@ -15,8 +15,7 @@ define([
     'zonalsumTable',
     'fenix-ui-map',
     'select2',
-    'bootstrap',
-    'bootstrap-toggle'
+    'bootstrap'
 ], function (
     $,
     _,
@@ -63,11 +62,10 @@ define([
                     }
                 }
             },
-
             // template of the chart
             chart_template: {
                 xAxis: {
-                    categories: ['Jan', 'Feb', 'Mar', 'Apr', 'May', 'Jun', 'Jul', 'Aug', 'Sep', 'Oct', 'Nov', 'Dec']
+                    categories: ['Jan','Feb','Mar','Apr','May','Jun','Jul','Aug','Sep','Oct','Nov','Dec']
                 },
                 tooltip: {
                     valueDecimals: 1
@@ -78,7 +76,6 @@ define([
                     }
                 },
                 series: [],
-
             }
         }
     };
@@ -88,14 +85,14 @@ define([
         ZONALSUM_WRAP_OPEN: '#zonalsum_wrap_open',
         ZONALSUM_SELECTORS: '#zonalsum_selectors',
         ZONALSUM_TABLE: '#zonalsum_table',
-        WRAPCHART: '#charts_wrap'
+        CHART_WRAP: '#charts_wrap'
     }
 
     WSP.prototype.init = function(config) {
 
         var _this = this;
 
-        this.o = $.extend(true, {}, this.o, config);
+        this.o = $.extend(true,{},this.o, config);
 
         this.$placeholder = $(this.o.s.placeholder);
 
@@ -107,7 +104,7 @@ define([
         this.$zonasum_selectors = this.$placeholder.find(s.ZONALSUM_SELECTORS);
         this.$zonasum_table = this.$placeholder.find(s.ZONALSUM_TABLE);
         this.$zonasum_wrap_open = this.$placeholder.find(s.ZONALSUM_WRAP_OPEN);
-        this.$wrapchart = this.$placeholder.find(s.WRAPCHART);
+        this.$wrapchart = this.$placeholder.find(s.CHART_WRAP);
 
         var zonalsum_selectors = new ZonalSumSelectors();
 
@@ -123,8 +120,6 @@ define([
 
         amplify.subscribe('nena.zonalsums.selection_gaul0', function(codes) {
 
-			console.log('nena.zonalsums.selection_gaul0',codes);
-            
             //only for NDVI map
             var box = _.last(_this.o.box);
             box.m.zoomTo("country", "adm0_code", codes);
@@ -132,10 +127,12 @@ define([
 
         amplify.subscribe('nena.zonalsums.submit', function(selection) {
 
-			console.log('nena.zonalsums.submit',selection);
+			//selection = _.extend(selection, averageLayerPrefix);
 
             selection.workspace = 'nena_mod13a3_anomaly';
             selection.layerName = 'ndvi_anomaly_1km_mod13a3_200911_3857';
+
+			console.log('nena.zonalsums.submit',selection);
 
             table.createTable(selection);
 
@@ -148,9 +145,6 @@ define([
         this.$placeholder.on('click','.close', function(e) {
             $(e.target).parent().slideUp();
         });
-
-        
-
     };
 
     WSP.prototype.render = function(data) {
