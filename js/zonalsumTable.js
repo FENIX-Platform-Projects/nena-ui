@@ -3,7 +3,7 @@ define([
     'underscore',
     'q',
     'handlebars',
-    'fx-wsp-ui/config/Services',
+    'fx-wsp-ui/config/config',
     'text!fx-wsp-ui/html/templates.html',
     'amplify'
 ], function (
@@ -11,7 +11,7 @@ define([
     _,
     Q,
     Handlebars,
-    Services,
+    Config,
     templates
 ) {
     'use strict';
@@ -114,7 +114,7 @@ define([
 
                 $.ajax({
                     type: 'POST',
-                    url: Services.url_models_hostspot_crops,
+                    url: Config.services.url_models_hostspot_crops,
                     contentType: "application/json",
                     dataType: 'json',
                     data: JSON.stringify(request),
@@ -173,7 +173,7 @@ define([
         // call the zonalsum service
         $.ajax({
             type: 'POST',
-            url: Services.url_models_hostspot_crops,
+            url: Config.services.url_models_hostspot_crops,
             contentType: "application/json",
             dataType: 'json',
             data: JSON.stringify(request),

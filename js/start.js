@@ -9,7 +9,7 @@ define([
     'text!fx-wsp-ui/html/templates.html',
     'i18n!fx-wsp-ui/nls/translate',
     'fx-c-c/start',
-    'fx-wsp-ui/config/Services',
+    'fx-wsp-ui/config/config',
     'fx-wsp-ui/config/highcharts',
     'zonalsum',
     'zonalsumTable',
@@ -26,7 +26,7 @@ define([
     templates,
     i18n,
     ChartCreator,
-    Services,
+    Config,
     //ZonalStats,
     HighchartsTemplate,
     ZonalSumSelectors,
@@ -38,14 +38,14 @@ define([
 
         this.o = {
             lang: 'EN',
-            prefix: Services.layerPrefix,
+            prefix: Config.layerPrefix,
             s: {
                 placeholder: '#content'
             },
-            box: Services.boxes,
+            box: Config.boxes,
 
             // Global layers to load for each map
-            layers: Services.layers,
+            layers: Config.layers,
 
             // query raster timeserie
             pixel_query : {
@@ -313,7 +313,7 @@ define([
             box[layerType] = new FM.layer({
                 layers: layerTypePrefix + "_" + date + "_3857",
                 layertitle: layerTitle + " " + date,
-                urlWMS: Services.url_geoserver_wms_demo,
+                urlWMS: Config.services.url_geoserver_wms_demo,
                 opacity: '1',
                 lang: 'EN',
                 openlegend: true,
@@ -331,7 +331,7 @@ define([
         }else {
             var l = {
                 lang: 'EN',
-                urlWMS: Services.url_geoserver_wms_demo,
+                urlWMS: Config.services.url_geoserver_wms_demo,
                 layers: layer.workspace + ':' + layer.layerName,
                 layertitle: layerTitle,
                 openlegend: (openlegend !== null && openlegend !== undefined)? openlegend: false,
@@ -381,14 +381,14 @@ define([
             }
         };
 
-        var url = Services.url_d3s_resources_find + "?" + Services.url_d3s_resources_find_order_by_date_parameters;
+        var url = Config.services.url_d3s_resources_find + "?" + Config.services.url_d3s_resources_find_order_by_date_parameters;
         var _this = this;
         $.ajax({
             type: 'POST',
             url: url,
             contentType: "application/json",
             dataType: 'json',
-            //headers: Services.url_d3s_resources_find_headers,
+            //headers: Config.services.url_d3s_resources_find_headers,
             data: JSON.stringify(request_filter),
             crossDomain: true,
             success : function(response) {
@@ -480,7 +480,7 @@ define([
         selectedLayer = new FM.layer({
             layers: workspace + ":" + layerName,
             layertitle: layerTitle,
-            urlWMS: Services.url_geoserver_wms_demo,
+            urlWMS: Config.services.url_geoserver_wms_demo,
             opacity: '1',
             lang: 'EN',
             openlegend: true,
@@ -622,7 +622,7 @@ define([
         if (requestKey === this.o.requestKey) {
             $.ajax({
                 type: 'POST',
-                url: Services.url_geostatistics_rasters_pixel,
+                url: Config.services.url_geostatistics_rasters_pixel,
                 contentType: "application/json",
                 dataType: 'json',
                 data: JSON.stringify(data),
@@ -689,12 +689,12 @@ define([
             attributionControl: false
         });
 
-        m.createMap(Services.lat, Services.lng, Services.zoom);
+        m.createMap(Config.lat, Config.lng, Config.zoom);
 
         m.addLayer(new FM.layer({
             layers: 'fenix:uncs_lakes_3857',
             layertitle: '',
-            urlWMS: Services.url_geoserver_wms_demo,
+            urlWMS: Config.services.url_geoserver_wms_demo,
             opacity: '1',
             zindex: '400',
             lang: 'en',
@@ -704,7 +704,7 @@ define([
         m.addLayer(new FM.layer({
             layers: 'fenix:gaul0_line_3857',
             layertitle: i18n.country_coundaries,
-            urlWMS: Services.url_geoserver_wms,
+            urlWMS: Config.services.url_geoserver_wms,
             opacity: '1',
             zindex: '500',
             lang: 'en',

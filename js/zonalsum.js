@@ -3,7 +3,7 @@ define([
     'underscore',
     'q',
     'handlebars',
-    'fx-wsp-ui/config/Services',
+    'fx-wsp-ui/config/config',
     'text!fx-wsp-ui/html/templates.html',
     'select2',
     'amplify'
@@ -12,7 +12,7 @@ define([
     _,
     Q,
     Handlebars,
-    Services,
+    Config,
     templates
 ) {
     'use strict';
@@ -30,7 +30,7 @@ define([
 
     var query = {
         countries : "select adm0_code, adm0_name from spatial.gaul0_3857 "+
-                    "where adm0_code IN (" + Services.country_codes.join(',') + ") "+
+                    "where adm0_code IN (" + Config.country_codes.join(',') + ") "+
                     "order by adm0_name",
         regions:"select adm1_code, adm1_name from spatial.gaul1_3857 "+
                 "where adm0_code IN ({{codes}}) "+
@@ -108,7 +108,7 @@ define([
 
         this.$country_dd.empty();
 
-        $.ajax({url: Services.url_spatial_query + query.countries,
+        $.ajax({url: Config.services.url_spatial_query + query.countries,
             success: function(result){
 
                 self.$country_dd.html(self.createDropdown(self.formatDropDownJson(result)));
@@ -125,7 +125,7 @@ define([
         // resetting dd selections
         this.$region_dd.select2('data', null);
 
-        $.ajax({url: Services.url_spatial_query + query.regions.replace('{{codes}}', codes),
+        $.ajax({url: Config.services.url_spatial_query + query.regions.replace('{{codes}}', codes),
             success: function(result){
 
                 self.o.cached_regions = self.formatDropDownJson(result);
