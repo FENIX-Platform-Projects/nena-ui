@@ -3,7 +3,7 @@
     <div class="container-fluid" style="margin-top:3px;position:relative">
 
         <div class="thematic-layers">        
-            <h4>Thematic layers</h4>
+            <h4>{{{base_layers}}}</h4>
             <div class="form-group" data-role="ss">
             </div>
         </div>
@@ -65,7 +65,7 @@
 	</div>
 
     <div id="zonalsum_wrap_open" style="display:none" class="btn btn-default">Zonal Sum Analysis</div>
-    <div id="zonalsum_wrap" style="display:none" class="container-fluid">
+    <div id="zonalsum_wrap" style="display:block" class="container-fluid">
         <div class='row'>
             <div class='col-xs-12'>
                 <h1>Zonal Sum Analysis</h1>
@@ -75,105 +75,4 @@
         <div id="zonalsum_table"></div>
         <a class="close">&times;</a>
     </div>
-</script>
-
-<script id="dropdown" type="text/x-handlebars-template">
-{{#each data}}
-    <option value="{{code}}">{{label}}</option>
-{{/each}}
-</script>
-
-<script id="zonalsum" type="text/x-handlebars-template">
-<div>
-    <div class="row">
-        <div class="col-sm-3">
-            <div>Select a country</div>
-            <!--<div id="country_dd"></div>-->
-            <select id="country_dd" class="js-example-responsive" style="width: 100%"></select>
-        </div>
-        <div class="col-sm-3">
-            <div>Select a region</div>
-            <select id="region_dd" class="js-example-responsive" multiple style="width: 100%"></select>
-            <!--<div id="select_all" class="btn pull-right"><i class="fa fa-filter"></i>Select All</div>-->
-            <!--<div id="deselect_all" class="btn pull-right"><i class="fa fa-filter"></i>Deselect All</div>-->
-        </div>
-        <div class="col-sm-3">
-            <div>Percentage Threshold</div>
-            <select id="threshold_dd" class="js-example-responsive" style="width: 100%">
-                <option>-30</option>
-                <option>-40</option>
-                <option>-50</option>
-            </select>
-        </div>
-		<div class="col-sm-3">
-            <div></div>
-            <div id="zonalsum_button" class="btn pull-right"><i class="fa fa-filter"></i>Button zonalsum</div>
-        </div>
-    </div>
-
-<!--    <div class="row">
-        <div class="col-sm-12" id="table_zonalsum"></div>
-    </div>-->
-</div>
-</script>
-
-<script id="zonalsum_table" type="text/x-handlebars-template">
-<div>
-    <table class='table table-striped table-bordered table-responsive table-hover table-condensed'>
-        <thead>
-        <tr>
-            <th>
-                Province
-            </th>
-            <th>
-                Area Cultivated (ha)
-            </th>
-            <th>
-                Area Affected (ha)
-            </th>
-            <th>
-                Percentage (%)
-            </th>
-        </tr>
-
-        </thead>
-        <tbody id="table_content">
-<!--        {{#each rows}}
-            <tr>
-                <td>
-                    {{this.label}}
-                </td>
-                <td>
-                    {{this.area_cultivated}}
-                </td>
-                <td>
-                    {{this.area_affected}}
-                </td>
-                <td>
-                    {{this.percentage}}
-                </td>
-            </tr>
-        {{/each}}-->
-        </tbody>
-    </table>
-</div>
-</script>
-
-<script id="zonalsum_table_row" type="text/x-handlebars-template">
-{{#each rows}}
-    <tr>
-        <td>
-            {{this.label}}
-        </td>
-        <td>
-            {{this.area_cultivated}}
-        </td>
-        <td>
-            {{this.area_affected}}
-        </td>
-        <td>
-            {{this.percentage}}
-        </td>
-    </tr>
-{{/each}}
 </script>

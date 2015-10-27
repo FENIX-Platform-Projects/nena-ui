@@ -18,6 +18,7 @@ define({
         irrigated_areas_solaw_2012: 'Irrigated Areas&nbsp;(2012)',
         cultivated_land_gaez_2010: 'Cultivated Land GAEZ&nbsp;(2010)',
         chirps: 'Rainfall',
+        base_layers: 'Base Thematic Layers',
         selectable_layers: 'Layers',
         eco_region: 'NENA Region',
         gaul1: 'ADM. Unit Level1',

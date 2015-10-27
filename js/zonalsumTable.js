@@ -4,7 +4,7 @@ define([
     'q',
     'handlebars',
     'fx-wsp-ui/config/config',
-    'text!fx-wsp-ui/html/templates.html',
+    'text!fx-wsp-ui/html/zonalsum.html',
     'amplify'
 ], function (
     $,
