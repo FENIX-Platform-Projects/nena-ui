@@ -5,15 +5,12 @@ define([
     'underscore',
     'q',    
     'handlebars',
-    'moment',    
-    //'text!fx-wsp-ui/html/structure.hbs',
-    'text!fx-wsp-ui/html/templates_tabs.html',
+    'moment',
+    'text!fx-wsp-ui/html/templates.html',
     'i18n!fx-wsp-ui/nls/translate',
-
     'fx-c-c/start',
     'fx-wsp-ui/config/Services',
-    //'text!fx-wsp-ui/config/gaul1_ndvi_afg.json',
-    'fx-wsp-ui/config/highcharts_template',
+    'fx-wsp-ui/config/highcharts',
     'zonalsum',
     'zonalsumTable',
     'fenix-ui-map',
@@ -91,7 +88,6 @@ define([
         ZONALSUM_WRAP_OPEN: '#zonalsum_wrap_open',
         ZONALSUM_SELECTORS: '#zonalsum_selectors',
         ZONALSUM_TABLE: '#zonalsum_table',
-        BUTTON: '#button_zonalstat',
         WRAPCHART: '#charts_wrap'
     }
 
@@ -110,34 +106,38 @@ define([
         this.$zonasum_wrap = this.$placeholder.find(s.ZONALSUM_WRAP);
         this.$zonasum_selectors = this.$placeholder.find(s.ZONALSUM_SELECTORS);
         this.$zonasum_table = this.$placeholder.find(s.ZONALSUM_TABLE);
-        this.$button = this.$placeholder.find(s.BUTTON);
         this.$zonasum_wrap_open = this.$placeholder.find(s.ZONALSUM_WRAP_OPEN);
         this.$wrapchart = this.$placeholder.find(s.WRAPCHART);
 
         var zonalsum_selectors = new ZonalSumSelectors();
+
         zonalsum_selectors.init({
             container: this.$zonasum_selectors
         });
 
         var table = new ZonalSumTable();
+
         table.init({
             container: this.$zonasum_table
         });
 
-        amplify.subscribe('nena.zonalsums.gaul0_selection', function(e) {
-            //only NDVI
+        amplify.subscribe('nena.zonalsums.selection_gaul0', function(codes) {
+
+			console.log('nena.zonalsums.selection_gaul0',codes);
+            
+            //only for NDVI map
             var box = _.last(_this.o.box);
-            box.m.zoomTo("country", "adm0_code", e.codes);
+            box.m.zoomTo("country", "adm0_code", codes);
         });
 
-        this.$button.on('click',function() {
+        amplify.subscribe('nena.zonalsums.submit', function(selection) {
 
-            var obj = zonalsum_selectors.getFilter();
+			console.log('nena.zonalsums.submit',selection);
 
-            obj.workspace = 'nena_mod13a3_anomaly';
-            obj.layerName = 'ndvi_anomaly_1km_mod13a3_200911_3857';
+            selection.workspace = 'nena_mod13a3_anomaly';
+            selection.layerName = 'ndvi_anomaly_1km_mod13a3_200911_3857';
 
-            table.createTable(obj);
+            table.createTable(selection);
 
         });
 
@@ -159,8 +159,7 @@ define([
         this.o.lang = this.o.lang !== null ? this.o.lang : 'EN';
 
         /* Load template. */
-        var source = $(templates).filter('#wsp_ui_structure').html(),
-            template = Handlebars.compile(source),
+        var template = Handlebars.compile( $(templates).filter('#structure').html() ),
             boxes = [];
 
         for (var i = 0; i < this.o.box.length; i++) {
@@ -331,13 +330,13 @@ define([
             box[layerType] = null;
         }else {
             var l = {
-                layers: layer.workspace + ":" + layer.layerName,
-                layertitle: layerTitle,
-                urlWMS: Services.url_geoserver_wms_demo,
-                opacity:(layer.opacity !== null && layer.opacity !== undefined)? layer.opacity: '1',
                 lang: 'EN',
+                urlWMS: Services.url_geoserver_wms_demo,
+                layers: layer.workspace + ':' + layer.layerName,
+                layertitle: layerTitle,
                 openlegend: (openlegend !== null && openlegend !== undefined)? openlegend: false,
                 defaultgfi: (defaultgfi !== null && defaultgfi !== undefined)? defaultgfi: false,
+                opacity:    (layer.opacity !== null && layer.opacity !== undefined)? layer.opacity: '1'                
             };
 
             if (layer.style !== null && layer.style !== undefined) {

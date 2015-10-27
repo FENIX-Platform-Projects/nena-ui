@@ -4,8 +4,7 @@ define([
     'q',
     'handlebars',
     'fx-wsp-ui/config/Services',
-    'text!fx-wsp-ui/html/zonalsumTable.hbs',
-    'text!fx-wsp-ui/html/zonalsumRow.hbs',
+    'text!fx-wsp-ui/html/templates.html',
     'amplify'
 ], function (
     $,
@@ -13,8 +12,7 @@ define([
     Q,
     Handlebars,
     Services,
-    template,
-    templateRow
+    templates
 ) {
     'use strict';
 
@@ -81,8 +79,8 @@ define([
 
         this.$table = $(this.o.container);
 
-        this.o.templateTable = template;
-        this.o.templateRow = templateRow;
+        this.o.templateTable = $(templates).filter('#zonalsum_table').html();
+        this.o.templateRow = $(templates).filter('#zonalsum_table_row').html();
 
     };
 

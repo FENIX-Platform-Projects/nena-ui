@@ -98,7 +98,7 @@ define(function () {
             }
         },
         legend: { //Modifica style della legenda
-            enabled: false, //Attiva la legenda
+            enabled: true, //Attiva la legenda
             floating: false, // IMPORTANTE - Permette alla plot area di stare sotto alla legenda - si guadagna molto spazio
 
             //margin: 100, //Margine dell'intero blocco legenda dall'area di PLOT (Solo quando non è floating)

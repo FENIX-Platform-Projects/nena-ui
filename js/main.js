@@ -1,5 +1,5 @@
 /*global requirejs*/
-requirejs(['./paths'], function (paths) {
+requirejs(['../config/paths'], function (paths) {
 
     requirejs.config(paths);
 

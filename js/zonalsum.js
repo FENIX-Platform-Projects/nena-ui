@@ -4,8 +4,7 @@ define([
     'q',
     'handlebars',
     'fx-wsp-ui/config/Services',
-    'text!fx-wsp-ui/html/zonalsum.hbs',
-    'text!fx-wsp-ui/html/dropdown.hbs',
+    'text!fx-wsp-ui/html/templates.html',
     'select2',
     'amplify'
 ], function (
@@ -14,15 +13,14 @@ define([
     Q,
     Handlebars,
     Services,
-    template,
-    templateDropdown
+    templates
 ) {
     'use strict';
 
     var s = {
         COUNTRY_DD: '#country_dd',
         REGION_DD: '#region_dd',
-        BUTTON: '#button_zonalsum',
+        BUTTON: '#zonalsum_button',
         TABLE: '#table_zonalsum',
         THRESHOLD_DD: '#threshold_dd',
         SELECT_ALL: '#select_all',
@@ -48,10 +46,10 @@ define([
 
         this.o = config;
 
-        this.o.template = template;
-        this.o.templateDropdown = templateDropdown;
+        this.o.template = $(templates).filter('#zonalsum').html();
+        this.o.templateDropdown = $(templates).filter('#dropdown').html();
 
-        this.initVariables(template, templateDropdown);
+        this.initVariables();
 
         this.initComponents();
 
@@ -61,9 +59,7 @@ define([
 
     ZONALSUM.prototype.initVariables = function () {
 
-        var source = $(this.o.template).html(),
-            template = Handlebars.compile(source),
-            html = template({});
+        var html = Handlebars.compile( $(this.o.template).html() )({});
 
         this.$container = $(this.o.container);
         this.$container.html(html);
@@ -96,13 +92,13 @@ define([
         this.$country_dd.change(function(e) {
 
             self.createRegion_DD(e.val);
-
-            // amplify the selected codes
-            amplify.publish('nena.zonalsums.gaul0_selection', {
-                codes: e.val
-            });
-
+            
+            amplify.publish('nena.zonalsums.selection_gaul0', e.val );
         });
+
+        this.$button.on('click',function() {
+            amplify.publish('nena.zonalsums.submit', self.getFilter() );
+		});
 
     };
 
