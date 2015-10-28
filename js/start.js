@@ -27,7 +27,7 @@ define([
     ChartCreator,
     Config,
     //ZonalStats,
-    HighchartsTemplate,
+    ConfigHighcharts,
     ZonalSumSelectors,
     ZonalSumTable
 ) {
@@ -65,7 +65,7 @@ define([
             // template of the chart
             chart_template: {
                 xAxis: {
-                    categories: ['Jan','Feb','Mar','Apr','May','Jun','Jul','Aug','Sep','Oct','Nov','Dec']
+                    categories: Config.chart_months
                 },
                 tooltip: {
                     valueDecimals: 1
@@ -154,19 +154,32 @@ define([
             var year = $(e.target).val(),
             	sel = $(e.target).is(':checked'),
             	boxes = _this.o.box;
-            	
-            for (var i = 0; i < boxes.length; i++) {
-            	_.each(boxes[i].chartObj.series, function(serie) {
-            		
-            		if(serie.name === year)
-            			serie.setVisible( sel, true )
-            	});
-            }
 
+            for (var i=0; i < boxes.length; i++)
+            {
+            	if(boxes[i].chartObj) {
+	            	for (var s=0; s < boxes[i].chartObj.series.length; s++) {
+	            		
+	            		var serie = boxes[i].chartObj.series[s];
+
+	            		if(serie.name === year)
+	            			serie.setVisible(sel, true);
+	            	}
+	            }
+            }
         });
 
+        //colorize chart legend
+		this.$chart_years.find('label').each(function() {
+			
+			var year = $(this).data('year'),
+				color = ConfigHighcharts.colors[ Config.charts_years.indexOf(year) ];
+
+			$(this).css({color: color });
+		});
+
+
         this.$zonasum_wrap.on('click','.close', function(e) {
-        	console.log(e)
             _this.$zonasum_wrap.slideUp()
         });        
     };
@@ -251,7 +264,7 @@ define([
             });
             //$('#box'+id).prependTo(_this.$placeholder.find('#boxes_wrap'))
         });
-        
+
         var _this = this;
         for (var i = 0; i < this.o.box.length; i++)
         {
@@ -276,8 +289,10 @@ define([
             // create charts on map selection
             this.o.box[i].m.map.on('click', function (e) {
                 
+                _this.$chart_wrap.show();
                 _this.$chart_wrap.removeClass('collapsed');
             	_this.$chart_wrap.find('.close').find('.fa').addClass('fa-caret-down').removeClass('fa-caret-up')
+				_this.$chart_years.find('input').not('#yearAvg').prop('checked', true);
 
                 _this.createCharts(e.latlng.lat, e.latlng.lng);
 
@@ -318,7 +333,7 @@ define([
 
             }, this));
         }
-
+       
         // sync maps
         this.syncMaps(this.o.box);
     };
@@ -488,8 +503,6 @@ define([
     };
 
     WSP.prototype.handlePixelSelection = function(e) {
-        console.log('callback click', e)
-
     };
 
     WSP.prototype.loadLayer = function(m, selectedLayer, workspace, layerName, layerTitle, box) {
@@ -523,6 +536,9 @@ define([
     };
 
     WSP.prototype.createCharts = function(lat, lon) {
+
+    	var _this = this;
+
         var requestKey = 'xxxxxxxx-xxxx-4xxx-yxxx-xxxxxxxxxxxx'.replace(/[xy]/g, function(c) {var r = Math.random()*16|0,v=c=='x'?r:r&0x3|0x8;return v.toString(16);});
         this.o.requestKey = requestKey;
         for(var i=0; i < this.o.box.length; i++) {
@@ -534,19 +550,19 @@ define([
         var cachedLayers = box.cachedLayers,
             $chart = box.$chart;
 
-        $chart.html('<div style="height:100px;with:50%"><i class="fa fa-spinner fa-spin fa-2x"></i><span> Loading '+ box.title +' Pixel Timeseries</span></div>');
-
-        //$chart.slideDown('slow');
+	        $chart.html('<div class="chart_loader"><i class="fa fa-spinner fa-spin fa-2x"></i><span> Loading </span></div>');
 
         box.chartObj = null;
 
         // chart template
-        var c = $.extend(true, {}, HighchartsTemplate, this.o.chart_template, box.chart.chartObj);
+        var c = $.extend(true, {}, ConfigHighcharts, this.o.chart_template, box.chart.chartObj);
 
         var formula = (box.chart.formula)? box.chart.formula: null;
 
         var _this = this;
-        _.each(Config.charts_years, function(year) {
+        for(var i in Config.charts_years) {
+        	
+        	var year = Config.charts_years[i];
 
             _this.getChartData(_this.getLayersByYear(cachedLayers, year), lat, lon, year.toString(), formula, requestKey)
             	.then(function(v) {
@@ -569,7 +585,7 @@ define([
                     }
                 }
             });
-        });
+        }
 
         // add Avg
         var avgLayers = [];
@@ -584,33 +600,22 @@ define([
         }
         _this.getChartData(avgLayers, lat, lon, 'AVG', formula, requestKey)
         	.then(function(v) {
-            if (requestKey === _this.o.requestKey) {
-                for (var i = 0; i < v.data.length; i++) {
-                    if (v.data[i] != null) {
-                        v.dashStyle = 'longdash';
-                        v.dashStyle = 'shortdot';
-                        v.color = 'red';
-                        v.lineWidth = 4;
-                        v.states = {
-                            hover: {
-                                lineWidth: 4
-                            }
-                        };
-                        box.chartObj.addSeries(v);
-                        break;
-                    }
-                }
-            }
+	            if (requestKey === _this.o.requestKey) {
+	                for (var i = 0; i < v.data.length; i++) {
+	                    if (v.data[i] != null) {
+	                        v = _.extend(Config.charts_avg_style, v);
+	                        box.chartObj.addSeries(v);
+	                        break;
+	                    }
+	                }
+	            }
         });
     };
 
     WSP.prototype.addSerieToChart = function(chartObj, serie) {
         for(var i=0; i< chartObj.series.length; i++) {
-            if ( chartObj.series[i].name == serie.name) {
-                //console.log(chartObj.series[i].name);
+            if (chartObj.series[i].name == serie.name) {
                 chartObj.series[i].data = serie.data;
-                //console.log(serie.data);
-                //console.log(chartObj.series[i]);
                 break;
             }
         }

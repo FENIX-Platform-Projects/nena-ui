@@ -56,17 +56,20 @@
         
     </div>
 
-	<div id="charts_wrap" class="container-fluid">
+	<div id="charts_wrap" class="container-fluid" style="display:none">
 		<div class="row" style="margin-bottom:20px">
+		<h1>Pixel Timeseries</h1>
 		{{#each box}}
 			<div class="boxchart col-xs-6" id="chart{{box_id}}" style="padding-left:0">
 			</div>
 		{{/each}}
 		</div>
-		<div class="row charts_years pull-right">
+		<div class="charts_years pull-right">
+			<input id="yearAvg" type="checkbox" value="AVG" />
+			<label style="color:red" data-year="AVG" for="yearAvg"> Show Average </label>
 		{{#each charts_years}}
-			<input id="year{{this}}" type="checkbox" checked class="boxchart col-xs-6" value="{{this}}" />
-			<label for="year{{this}}"> {{this}} </label>
+			<input id="year{{this}}" type="checkbox" value="{{this}}" checked />
+			<label data-year="{{this}}" for="year{{this}}"> {{this}} </label>
 		{{/each}}
 		</div>			
 		<a class="close"><i class="fa fa-caret-up"></i></a>

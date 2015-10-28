@@ -70,7 +70,8 @@ define(function () {
             '#2D1706',
             '#F1E300',
             '#F7AE3C',
-            '#DF3328'
+            '#D0A328',
+            '#03CD20'
         ],
         credits: {
             enabled: false //Attiva o disattiva il link di HighCharts dalla chart
@@ -145,7 +146,7 @@ define(function () {
                 }
             }
         },
-       plotOptions: {
+        plotOptions: {
             series: {
                 allowPointSelect: true, //Permette di selezionare i punti della chart
                 //pointPlacement: "on", Per partire dall'origine

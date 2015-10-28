@@ -53,7 +53,20 @@ define(['i18n!fx-wsp-ui/nls/translate'], function (i18n) {
         "lat": 22.187404991398775,
         "lng": 24.9169921875,
         "zoom": 4,
-        "charts_years": [2015,2014,2013,2012,2011,2010,2009,2008,2007],
+        "charts_years": [2015, 2014, 2013, 2012, 2011, 2010, 2009, 2008, 2007],
+        "charts_months": ['Jan','Feb','Mar','Apr','May','Jun','Jul','Aug','Sep','Oct','Nov','Dec'],
+        "charts_avg_style": {
+        	visible: false,
+            color: 'red',        	
+        	dashStyle: 'longdash',
+            dashStyle: 'shortdot',
+            lineWidth: 4,
+            states: {
+                hover: {
+                    lineWidth: 4
+                }
+            }
+        },
         "boxes": [
             {
                 id: 'chirps',
