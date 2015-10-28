@@ -20,6 +20,7 @@ define([
     var s = {
         COUNTRY_DD: '#country_dd',
         REGION_DD: '#region_dd',
+        CROP_DD: '#crop_dd',
         BUTTON: '#zonalsum_button',
         TABLE: '#table_zonalsum',
         THRESHOLD_DD: '#threshold_dd',
@@ -66,6 +67,7 @@ define([
 
         this.$country_dd = this.$container.find(s.COUNTRY_DD);
         this.$region_dd = this.$container.find(s.REGION_DD);
+        this.$crop_dd = this.$container.find(s.CROP_DD);
         this.$button = this.$container.find(s.BUTTON);
         this.$table = this.$container.find(s.TABLE);
         this.$threshold_dd = this.$container.find(s.THRESHOLD_DD);
@@ -74,6 +76,7 @@ define([
 
         this.$country_dd.select2();
         this.$region_dd.select2();
+        this.$crop_dd.select2();
         this.$threshold_dd.select2();
 
         this.createCountry_DD();

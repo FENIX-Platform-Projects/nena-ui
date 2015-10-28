@@ -85,7 +85,8 @@ define([
         ZONALSUM_WRAP_OPEN: '#zonalsum_wrap_open',
         ZONALSUM_SELECTORS: '#zonalsum_selectors',
         ZONALSUM_TABLE: '#zonalsum_table',
-        CHART_WRAP: '#charts_wrap'
+        CHART_WRAP: '#charts_wrap',
+        CHART_YEARS: '.charts_years'
     }
 
     WSP.prototype.init = function(config) {
@@ -105,6 +106,7 @@ define([
         this.$zonasum_table = this.$placeholder.find(s.ZONALSUM_TABLE);
         this.$zonasum_wrap_open = this.$placeholder.find(s.ZONALSUM_WRAP_OPEN);
         this.$chart_wrap = this.$placeholder.find(s.CHART_WRAP);
+        this.$chart_years = this.$chart_wrap.find(s.CHART_YEARS);
 
         var zonalsum_selectors = new ZonalSumSelectors();
 
@@ -145,6 +147,22 @@ define([
         this.$chart_wrap.on('click','.close', function(e) {
             $(e.currentTarget).parent().toggleClass('collapsed');
             $(e.currentTarget).find('.fa').toggleClass('fa-caret-down fa-caret-up')
+        });
+
+        this.$chart_years.on('change','input[type=checkbox]', function(e) {
+            
+            var year = $(e.target).val(),
+            	sel = $(e.target).is(':checked'),
+            	boxes = _this.o.box;
+            	
+            for (var i = 0; i < boxes.length; i++) {
+            	_.each(boxes[i].chartObj.series, function(serie) {
+            		
+            		if(serie.name === year)
+            			serie.setVisible( sel, true )
+            	});
+            }
+
         });
 
         this.$zonasum_wrap.on('click','.close', function(e) {
@@ -193,6 +211,7 @@ define([
 
         var dynamic_data = {
             box: this.o.box,
+            charts_years: Config.charts_years,
             wsp: i18n.wsp
         };
 
@@ -525,13 +544,19 @@ define([
         var c = $.extend(true, {}, HighchartsTemplate, this.o.chart_template, box.chart.chartObj);
 
         var formula = (box.chart.formula)? box.chart.formula: null;
+
         var _this = this;
-        for(var year=2015; year >= 2007; year--) {
-            this.getChartData(this.getLayersByYear(cachedLayers, year), lat, lon, year.toString(), formula, requestKey).then(function(v) {
+        _.each(Config.charts_years, function(year) {
+
+            _this.getChartData(_this.getLayersByYear(cachedLayers, year), lat, lon, year.toString(), formula, requestKey)
+            	.then(function(v) {
 
                 if (requestKey === _this.o.requestKey) {
+                    
                     if (box.chartObj === null) {
+
                         $chart.highcharts(c);
+
                         box.chartObj = Highcharts.charts[Highcharts.charts.length - 1];
                     }
 
@@ -544,7 +569,7 @@ define([
                     }
                 }
             });
-        }
+        });
 
         // add Avg
         var avgLayers = [];
@@ -557,7 +582,8 @@ define([
             l.dsd.layerName = l.dsd.layerName + "_" + month + "_3857";
             avgLayers.push(l);
         }
-        this.getChartData(avgLayers, lat, lon, 'AVG', formula, requestKey).then(function(v) {
+        _this.getChartData(avgLayers, lat, lon, 'AVG', formula, requestKey)
+        	.then(function(v) {
             if (requestKey === _this.o.requestKey) {
                 for (var i = 0; i < v.data.length; i++) {
                     if (v.data[i] != null) {
@@ -581,10 +607,10 @@ define([
     WSP.prototype.addSerieToChart = function(chartObj, serie) {
         for(var i=0; i< chartObj.series.length; i++) {
             if ( chartObj.series[i].name == serie.name) {
-                console.log(chartObj.series[i].name);
+                //console.log(chartObj.series[i].name);
                 chartObj.series[i].data = serie.data;
-                console.log(serie.data);
-                console.log(chartObj.series[i]);
+                //console.log(serie.data);
+                //console.log(chartObj.series[i]);
                 break;
             }
         }

@@ -56,13 +56,19 @@
         
     </div>
 
-	<div id="charts_wrap" class="container-fluid collapsed">
-		<div class="row" style="padding-top:10px">
+	<div id="charts_wrap" class="container-fluid">
+		<div class="row" style="margin-bottom:20px">
 		{{#each box}}
-			<div class="boxchart col-xs-6" id="chart{{box_id}}">
+			<div class="boxchart col-xs-6" id="chart{{box_id}}" style="padding-left:0">
 			</div>
 		{{/each}}
 		</div>
+		<div class="row charts_years pull-right">
+		{{#each charts_years}}
+			<input id="year{{this}}" type="checkbox" checked class="boxchart col-xs-6" value="{{this}}" />
+			<label for="year{{this}}"> {{this}} </label>
+		{{/each}}
+		</div>			
 		<a class="close"><i class="fa fa-caret-up"></i></a>
 	</div>
 

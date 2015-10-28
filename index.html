@@ -65,13 +65,14 @@
 			overflow-y:scroll;
 			max-height: 60%;
             min-height: 25%;
-			padding: 10px 20px;
+			padding: 0 50px 0 20px;
 		}
         #charts_wrap.collapsed {
         	height: 30px;
 			max-height: 30px;
             min-height: 0;        	
         	overflow: hidden;
+        	padding-top: 20px;
         }
 /*        #zonalsum_wrap .close,
         #charts_wrap .close {
@@ -84,7 +85,7 @@
         }
         .close {
             position: absolute;
-            top: 2px;
+            top: 0;
             right: 8px;            
             display: inline-block;
             font-size: 32px;
@@ -98,10 +99,15 @@
         }
         #charts_wrap .boxchart {
             height: 200px;
+            max-height: 90%;
+            float: left;
             min-width: 40%;
-            max-width: 45%;
-            border:1px solid #eee;
+            /*border:1px solid #eee;*/
             margin: 0 -1px -1px 0;
+        }
+        #charts_wrap .charts_years {
+        	background: #fff;
+        	/*box-shadow: 1px 1px 4px rgba(0,0,0,0.2)*/
         }
     </style>
 

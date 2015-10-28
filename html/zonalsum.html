@@ -9,27 +9,32 @@
 <div>
     <div class="row">
         <div class="col-sm-3">
-            <div>Select a country</div>
-            <!--<div id="country_dd"></div>-->
-            <select id="country_dd" class="js-example-responsive" style="width: 100%"></select>
+            <label class="control-label">Country</label>
+            <select id="country_dd" style="width: 100%">
+            </select>
         </div>
         <div class="col-sm-3">
-            <div>Select a region</div>
-            <select id="region_dd" class="js-example-responsive" multiple style="width: 100%"></select>
-            <!--<div id="select_all" class="btn pull-right"><i class="fa fa-filter"></i>Select All</div>-->
-            <!--<div id="deselect_all" class="btn pull-right"><i class="fa fa-filter"></i>Deselect All</div>-->
+            <label class="control-label">Region</label>
+            <select id="region_dd" multiple style="width: 100%">
+            </select>
         </div>
-        <div class="col-sm-3">
-            <div>Percentage Threshold</div>
-            <select id="threshold_dd" class="js-example-responsive" style="width: 100%">
+        <div class="col-sm-2">
+            <label class="control-label">Crop</label>
+            <select id="crop_dd" multiple style="width: 100%">
+                <option value="wheat" selected>Wheat</option>
+            </select>
+        </div>            
+        <div class="col-sm-2">
+            <label class="control-label">Percentage Threshold</label>
+            <select id="threshold_dd" style="width: 100%">
                 <option>-30</option>
                 <option>-40</option>
                 <option>-50</option>
             </select>
-        </div>
-		<div class="col-sm-3">
-            <div></div>
-            <div id="zonalsum_button" class="btn pull-right"><i class="fa fa-filter"></i>Button zonalsum</div>
+        </div>    
+		<div class="col-sm-2">
+            <label class="control-label">&nbsp;</label>
+            <div id="zonalsum_button" class="btn form-control"><i class="fa fa-filter"></i>Button zonalsum</div>
         </div>
     </div>
 

@@ -53,6 +53,7 @@ define(['i18n!fx-wsp-ui/nls/translate'], function (i18n) {
         "lat": 22.187404991398775,
         "lng": 24.9169921875,
         "zoom": 4,
+        "charts_years": [2015,2014,2013,2012,2011,2010,2009,2008,2007],
         "boxes": [
             {
                 id: 'chirps',
