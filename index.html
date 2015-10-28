@@ -26,6 +26,10 @@
     <link href="css/host.css" rel="stylesheet">
     <style type="text/css">
 
+/*        input[type="radio"] {
+		    display: inline-block;
+		}*/
+
         .thematic-layers {
         	position: absolute;
         	top: 30px;
@@ -60,9 +64,18 @@
             min-height: 25%;
 			padding-bottom: 20px;
 		}
-/*        input[type="radio"] {
-		    display: inline-block;
-		}*/
+		#zonalsum_wrap.collapsed,
+        #charts_wrap.collapsed {
+        	padding-top: 20px;
+        	height: 30px;
+			max-height: 30px;
+            min-height: 0;        	
+        	overflow: hidden;
+        }
+/*        #zonalsum_wrap .close,
+        #charts_wrap .close {
+        	content: ''
+        }*/
         #zonalsum_wrap_open {
             position: absolute;
             bottom: 15px;
@@ -70,8 +83,8 @@
         }
         .close {
             position: absolute;
-            top: 5px;
-            right: 5px;            
+            top: 0;
+            right: 8px;            
             display: inline-block;
             font-size: 32px;
             height: 20px;
@@ -85,7 +98,7 @@
         #charts_wrap .boxchart {
             height: 200px;
             min-width: 40%;
-            max-width: 50%;
+            max-width: 48%;
         }
     </style>
 

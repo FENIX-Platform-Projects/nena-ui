@@ -143,7 +143,8 @@ define([
         });
 
         this.$placeholder.on('click','.close', function(e) {
-            $(e.target).parent().slideUp();
+            $(e.currentTarget).parent().toggleClass('collapsed');
+            $(e.currentTarget).find('.fa').toggleClass('fa-caret-down fa-caret-up')
         });
     };
 
@@ -250,8 +251,12 @@ define([
 
             // create charts on map selection
             this.o.box[i].m.map.on('click', function (e) {
-                _this.$wrapchart.slideDown();
+                
+                _this.$wrapchart.removeClass('collapsed');
+            	_this.$wrapchart.find('.close').find('.fa').addClass('fa-caret-down').removeClass('fa-caret-up')
+
                 _this.createCharts(e.latlng.lat, e.latlng.lng);
+
             }, {box: this.o.box[i]});
 
             // anomaly

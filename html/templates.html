@@ -56,16 +56,16 @@
         
     </div>
 
-	<div id="charts_wrap" style="display:none" class="container-fluid">
+	<div id="charts_wrap" class="container-fluid collapsed">
 		{{#each box}}
 			<div class="boxchart col-xs-6" id="chart{{box_id}}">
 			</div>
 		{{/each}}
-		<a class="close">&times;</a>
+		<a class="close"><i class="fa fa-caret-up"></i></a>
 	</div>
 
     <div id="zonalsum_wrap_open" style="display:none" class="btn btn-default">Zonal Sum Analysis</div>
-    <div id="zonalsum_wrap" style="display:block" class="container-fluid">
+    <div id="zonalsum_wrap" style="display:none" class="container-fluid">
         <div class='row'>
             <div class='col-xs-12'>
                 <h1>Zonal Sum Analysis</h1>
@@ -73,6 +73,6 @@
         </div>
         <div id="zonalsum_selectors"></div>
         <div id="zonalsum_table"></div>
-        <a class="close">&times;</a>
+        <a class="close"><i class="fa fa-caret-down"></i></a>
     </div>
 </script>
