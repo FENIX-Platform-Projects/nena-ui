@@ -104,7 +104,7 @@ define([
         this.$zonasum_selectors = this.$placeholder.find(s.ZONALSUM_SELECTORS);
         this.$zonasum_table = this.$placeholder.find(s.ZONALSUM_TABLE);
         this.$zonasum_wrap_open = this.$placeholder.find(s.ZONALSUM_WRAP_OPEN);
-        this.$wrapchart = this.$placeholder.find(s.CHART_WRAP);
+        this.$chart_wrap = this.$placeholder.find(s.CHART_WRAP);
 
         var zonalsum_selectors = new ZonalSumSelectors();
 
@@ -142,10 +142,15 @@ define([
             _this.$zonasum_wrap.slideDown();
         });
 
-        this.$placeholder.on('click','.close', function(e) {
+        this.$chart_wrap.on('click','.close', function(e) {
             $(e.currentTarget).parent().toggleClass('collapsed');
             $(e.currentTarget).find('.fa').toggleClass('fa-caret-down fa-caret-up')
         });
+
+        this.$zonasum_wrap.on('click','.close', function(e) {
+        	console.log(e)
+            _this.$zonasum_wrap.slideUp()
+        });        
     };
 
     WSP.prototype.render = function(data) {
@@ -252,8 +257,8 @@ define([
             // create charts on map selection
             this.o.box[i].m.map.on('click', function (e) {
                 
-                _this.$wrapchart.removeClass('collapsed');
-            	_this.$wrapchart.find('.close').find('.fa').addClass('fa-caret-down').removeClass('fa-caret-up')
+                _this.$chart_wrap.removeClass('collapsed');
+            	_this.$chart_wrap.find('.close').find('.fa').addClass('fa-caret-down').removeClass('fa-caret-up')
 
                 _this.createCharts(e.latlng.lat, e.latlng.lng);
 

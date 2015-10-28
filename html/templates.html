@@ -57,10 +57,12 @@
     </div>
 
 	<div id="charts_wrap" class="container-fluid collapsed">
+		<div class="row" style="padding-top:10px">
 		{{#each box}}
 			<div class="boxchart col-xs-6" id="chart{{box_id}}">
 			</div>
 		{{/each}}
+		</div>
 		<a class="close"><i class="fa fa-caret-up"></i></a>
 	</div>
 
@@ -73,6 +75,6 @@
         </div>
         <div id="zonalsum_selectors"></div>
         <div id="zonalsum_table"></div>
-        <a class="close"><i class="fa fa-caret-down"></i></a>
+        <a class="close">&times;</a>
     </div>
 </script>

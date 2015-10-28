@@ -48,6 +48,9 @@
 		h1 {
 			font-size: 24px;
 			margin: 5px 10px;
+			position: fixed;
+			top: 0;
+			right: 5px;
 		}
 		#zonalsum_wrap,
         #charts_wrap {
@@ -58,15 +61,13 @@
 			z-index: 5000;
 			background: rgba(255,255,255,1);
 			box-shadow: 0 -8px 16px rgba(0,0,0,0.2);
-			overflow-x:auto;
+			overflow-x:hidden;
 			overflow-y:scroll;
 			max-height: 60%;
             min-height: 25%;
-			padding-bottom: 20px;
+			padding: 10px 20px;
 		}
-		#zonalsum_wrap.collapsed,
         #charts_wrap.collapsed {
-        	padding-top: 20px;
         	height: 30px;
 			max-height: 30px;
             min-height: 0;        	
@@ -78,12 +79,12 @@
         }*/
         #zonalsum_wrap_open {
             position: absolute;
-            bottom: 15px;
+            bottom: 70px;
             left: 15px;
         }
         .close {
             position: absolute;
-            top: 0;
+            top: 2px;
             right: 8px;            
             display: inline-block;
             font-size: 32px;
@@ -98,7 +99,9 @@
         #charts_wrap .boxchart {
             height: 200px;
             min-width: 40%;
-            max-width: 48%;
+            max-width: 45%;
+            border:1px solid #eee;
+            margin: 0 -1px -1px 0;
         }
     </style>
 
