@@ -120,20 +120,24 @@ define([
             container: this.$zonasum_table
         });
 
-        amplify.subscribe('nena.zonalsums.selection_gaul0', function(codes) {
+        //NDVI BOX
 
-            //only for NDVI map
-            var box = _.last(_this.o.box);
-            box.m.zoomTo("country", "adm0_code", codes);
+        //only for NDVI map
+        var ndvibox = _.last(_this.o.box);
+
+        amplify.subscribe('nena.zonalsums.selection_gaul0', function(codes) {
+            ndvibox.m.zoomTo("country", "adm0_code", codes);
         });
 
         amplify.subscribe('nena.zonalsums.submit', function(selection) {
 
-			//selection = _.extend(selection, averageLayerPrefix);
-
             selection.workspace = 'nena_mod13a3_anomaly';
             selection.layerName = 'ndvi_anomaly_1km_mod13a3_200911_3857';
-
+			
+/*			selection.layerName = ndvibox.$dd.find(":selected").val();
+			layerName = ndvibox.$dd.find(":selected").val(),
+            layer = this.getLayerByLayerName(layerName, ndvibox.cachedLayers),
+*/
 			console.log('nena.zonalsums.submit',selection);
 
             table.createTable(selection);
@@ -277,9 +281,6 @@ define([
 
             if(i > 0)
 				this.o.box[i].$box.hide();
-
-            // init dropdown
-            this.o.box[i].$dd = this.o.box[i].$box.find('[data-role="dd"]');
 
             this.fillDD(this.o.box[i]);
 
@@ -431,12 +432,15 @@ define([
             crossDomain: true,
             success : function(response) {
                 // TODO build dropdown or display:none
-                for (var i=0; i < response.length; i++) {
-                    var title = response[i].title[_this.o.lang],
+                for (var i=0; i < response.length; i++)
+                {
+                    var layerName = response[i].dsd.layerName,
+                    	title = response[i].title[_this.o.lang],
                         name = title.split(' '),
                         ym = name.pop(),
                         tit = moment(ym,'YYYYMM').format('YYYY MMMM');
-                    $dd.append("<option value='" + response[i].dsd.layerName + "'>" + tit + "</option>");
+
+                    $dd.append("<option value='" + layerName + "'>" + tit + "</option>");
                 }
                 box.cachedLayers = response;
 
