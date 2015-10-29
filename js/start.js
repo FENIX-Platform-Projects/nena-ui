@@ -517,9 +517,14 @@ define([
         return (month > 9)? year.toString() + month.toString(): year.toString() + '0' + month.toString();
     };
 
-    WSP.prototype.handlePixelSelection = function(e) {
+    WSP.prototype.handlePixelSelection = function(e, val) {
 
-    	console.log('handlePixelSelection', arguments);
+    	for(var i=0; i < this.o.box.length; i++) {
+        	this.o.box[i].mapCursor.setIcon( L.divIcon({
+	        		html: '<img src="images/cursor.svg" /><i class="pixelval">'+parseFloat(val).toFixed(2)+'</i>',
+	        		iconSize: L.point(54, 54)
+	        	}) );
+    	}
     };
 
     WSP.prototype.loadLayer = function(m, selectedLayer, workspace, layerName, layerTitle, box) {
@@ -542,7 +547,7 @@ define([
                 content: {
                     EN: "{{GRAY_INDEX}}"
                 },
-                showpopup: true,
+                showpopup: false,
                 callback: _.bind(this.handlePixelSelection, this, box)
             }
         });

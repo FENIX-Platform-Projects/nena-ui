@@ -118,16 +118,19 @@
         	background: none;
         	border:none;
         }
-        .boxmap .leaflet-popup-tip,        
-        .boxmap .leaflet-popup-content-wrapper,
-        .boxmap .leaflet-popup-content {
-    		background: none;
-    		box-shadow: none;
-    		font-size: 12px;
+        .boxmap .leaflet-marker-icon .pixelval {
+        	position: absolute;
+        	top: -10px;
+        	right: -20px;
+        	font-size: 14px;
+        	border-radius: 3px;
     		font-weight: bold;
     		overflow: hidden;
-    		color:#fff;
-    		text-shadow: 0 0 2px #000;
+    		color:#e00;
+    		display: inline-block;
+    		padding: 0 4px;
+    		background: #fff;
+    		box-shadow: 2px 2px 4px rgba(0,0,0,0.3);
     		text-align: center;
     	}
     </style>
