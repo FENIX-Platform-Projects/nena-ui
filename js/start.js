@@ -65,7 +65,7 @@ define([
             // template of the chart
             chart_template: {
                 xAxis: {
-                    categories: Config.chart_months
+                    categories: Config.charts_months
                 },
                 tooltip: {
                     valueDecimals: 1
@@ -139,7 +139,6 @@ define([
             var layer = _this.getLayerByLayerName(layerName, ndvibox.cachedLayers);
             var date = _this.getYearMonthByLayer(layer);
 
-            //var layer_to_query = layerTypePrefix + "_" + date + "_3857";
             var layer_to_query = "nena_mod13a3_anomaly_dpy:ndvi_anomaly_dpy_1km_mod13a3_" + date + "_3857";
 
             var workspace = layer_to_query.split(":")[0];
@@ -559,28 +558,29 @@ define([
         var cachedLayers = box.cachedLayers,
             $chart = box.$chart;
 
-	        $chart.html('<div class="chart_loader"><i class="fa fa-spinner fa-spin fa-2x"></i><span> Loading </span></div>');
+	    $chart.html('<div class="chart_loader"><i class="fa fa-spinner fa-spin fa-2x"></i><span> Loading </span></div>');
 
         box.chartObj = null;
 
         // chart template
-        var c = $.extend(true, {}, ConfigHighcharts, this.o.chart_template, box.chart.chartObj);
+        var confChart = $.extend(true, {}, ConfigHighcharts, this.o.chart_template, box.chart.chartObj);
 
         var formula = (box.chart.formula)? box.chart.formula: null;
 
         var _this = this;
         for(var i in Config.charts_years) {
         	
-        	var year = Config.charts_years[i];
+        	var year = Config.charts_years[i],
+        		layers = _this.getLayersByYear(cachedLayers, year);
 
-            _this.getChartData(_this.getLayersByYear(cachedLayers, year), lat, lon, year.toString(), formula, requestKey)
+            _this.getChartData(layers, lat, lon, year.toString(), formula, requestKey)
             	.then(function(v) {
 
                 if (requestKey === _this.o.requestKey) {
                     
                     if (box.chartObj === null) {
 
-                        $chart.highcharts(c);
+                        $chart.highcharts(confChart);
 
                         box.chartObj = Highcharts.charts[Highcharts.charts.length - 1];
                     }

@@ -4,7 +4,7 @@ define({
         error: 'WSP UI Error',
         z_score: 'ZScore',
         anomaly: 'Difference with Average',
-        anomaly_dpy: 'Previous &nbsp;year difference',
+        anomaly_dpy: 'Difference with previous &nbsp;year',
         rainfall: 'Rainfall',
         copyright: '© FAO 2015',
         temperature: 'Temperature',
