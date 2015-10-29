@@ -131,17 +131,24 @@ define([
 
         amplify.subscribe('nena.zonalsums.submit', function(selection) {
 
-            selection.workspace = 'nena_mod13a3_anomaly';
-            selection.layerName = 'ndvi_anomaly_1km_mod13a3_200911_3857';
+            // selection.workspace = 'nena_mod13a3_anomaly';
+            // selection.layerName = 'ndvi_anomaly_1km_mod13a3_200911_3857';
+
+            var layerName = ndvibox.$dd.find(":selected").val();
+
+            var layer = _this.getLayerByLayerName(layerName, ndvibox.cachedLayers);
+            var date = _this.getYearMonthByLayer(layer);
+
+            //var layer_to_query = layerTypePrefix + "_" + date + "_3857";
+            var layer_to_query = "nena_mod13a3_anomaly_dpy:ndvi_anomaly_dpy_1km_mod13a3_" + date + "_3857";
+
+            var workspace = layer_to_query.split(":")[0];
+            var layerName = layer_to_query.split(":")[1];
 			
-/*			selection.layerName = ndvibox.$dd.find(":selected").val();
-			layerName = ndvibox.$dd.find(":selected").val(),
-            layer = this.getLayerByLayerName(layerName, ndvibox.cachedLayers),
-*/
-			console.log('nena.zonalsums.submit',selection);
+			selection.layerName = layerName;
+            selection.workspace = workspace;
 
             table.createTable(selection);
-
         });
 
         this.$zonasum_wrap_open.on('click', function(e) {

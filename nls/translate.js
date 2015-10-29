@@ -3,7 +3,7 @@ define({
         ndvi_label: 'Vegetation Index&nbsp;(NDVI)',
         error: 'WSP UI Error',
         z_score: 'ZScore',
-        anomaly: 'Difference',
+        anomaly: 'Difference with Average',
         anomaly_dpy: 'Previous &nbsp;year difference',
         rainfall: 'Rainfall',
         copyright: '© FAO 2015',
