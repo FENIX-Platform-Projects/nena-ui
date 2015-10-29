@@ -459,7 +459,7 @@ define([
                 $dd.select2().select2('val', $dd.find('option:eq(0)').val(), true);
             },
             error : function(err, b, c) {
-                console.log("ERROR D3s");
+                console.warn("ERROR D3s");
             }
         });
 
@@ -492,7 +492,6 @@ define([
                 var fromDate = cachedLayers[i].meContent.seCoverage.coverageTime.from;
                 var d = new Date(fromDate);
                 if (d.getFullYear() == year) {
-                    //console.log(d.getMonth());
                     layers[d.getMonth()] = cachedLayers[i]
                 }
             }
@@ -504,7 +503,6 @@ define([
     };
 
     WSP.prototype.getYearMonthByLayer = function(layer) {
-        console.log(layer);
         var fromDate = layer.meContent.seCoverage.coverageTime.from,
             d = new Date(fromDate),
             month = d.getMonth() + 1,
@@ -664,7 +662,6 @@ define([
 
 
         var _this = this;
-        //console.log(requestKey, this.o.requestKey);
         if (requestKey === this.o.requestKey) {
             $.ajax({
                 type: 'POST',
