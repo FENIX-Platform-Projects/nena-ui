@@ -293,6 +293,13 @@ define([
             // init map
             this.o.box[i].m = this.initMap(this.o.box[i].$map);
 
+            this.o.box[i].mapCursor = L.marker([42,12], {
+	        	icon: L.divIcon({
+	        		html: '<img src="images/cursor.svg" /><i></i>',
+	        		iconSize: L.point(54, 54)
+	        	})
+	        }).addTo(this.o.box[i].m.map);
+
             // create charts on map selection
             this.o.box[i].m.map.on('click', function (e) {
                 
@@ -301,7 +308,7 @@ define([
             	_this.$chart_wrap.find('.close').find('.fa').addClass('fa-caret-down').removeClass('fa-caret-up')
 				_this.$chart_years.find('input').not('#yearAvg').prop('checked', true);
 
-                _this.createCharts(e.latlng.lat, e.latlng.lng);
+                _this.createCharts({lat: e.latlng.lat, lon: e.latlng.lng});
 
             }, {box: this.o.box[i]});
 
@@ -511,6 +518,8 @@ define([
     };
 
     WSP.prototype.handlePixelSelection = function(e) {
+
+    	console.log('handlePixelSelection', arguments);
     };
 
     WSP.prototype.loadLayer = function(m, selectedLayer, workspace, layerName, layerTitle, box) {
@@ -543,18 +552,23 @@ define([
         return selectedLayer;
     };
 
-    WSP.prototype.createCharts = function(lat, lon) {
+    WSP.prototype.createCharts = function(latlng) {
 
     	var _this = this;
 
         var requestKey = 'xxxxxxxx-xxxx-4xxx-yxxx-xxxxxxxxxxxx'.replace(/[xy]/g, function(c) {var r = Math.random()*16|0,v=c=='x'?r:r&0x3|0x8;return v.toString(16);});
+        
         this.o.requestKey = requestKey;
+
         for(var i=0; i < this.o.box.length; i++) {
-            this.createChart(this.o.box[i], lat, lon, requestKey);
+
+        	this.o.box[i].mapCursor.setLatLng(latlng);
+
+            this.createChart(this.o.box[i], latlng, requestKey);
         }
     };
 
-    WSP.prototype.createChart = function(box, lat, lon, requestKey) {
+    WSP.prototype.createChart = function(box, latlng, requestKey) {
         var cachedLayers = box.cachedLayers,
             $chart = box.$chart;
 
@@ -573,7 +587,7 @@ define([
         	var year = Config.charts_years[i],
         		layers = _this.getLayersByYear(cachedLayers, year);
 
-            _this.getChartData(layers, lat, lon, year.toString(), formula, requestKey)
+            _this.getChartData(layers, latlng, year.toString(), formula, requestKey)
             	.then(function(v) {
 
                 if (requestKey === _this.o.requestKey) {
@@ -607,7 +621,7 @@ define([
             l.dsd.layerName = l.dsd.layerName + "_" + month + "_3857";
             avgLayers.push(l);
         }
-        _this.getChartData(avgLayers, lat, lon, 'AVG', formula, requestKey)
+        _this.getChartData(avgLayers, latlng, 'AVG', formula, requestKey)
         	.then(function(v) {
 	            if (requestKey === _this.o.requestKey) {
 	                for (var i = 0; i < v.data.length; i++) {
@@ -639,10 +653,11 @@ define([
         return deferred.promise;
     };
 
-    WSP.prototype.getChartData = function(layers, lat, lon, serieName, formula, requestKey) {
-        var deferred = Q.defer();
+    WSP.prototype.getChartData = function(layers, latlng, serieName, formula, requestKey) {
+    
+        var deferred = Q.defer(),
+        	data = $.extend(true, {}, this.o.pixel_query);
 
-        var data = $.extend(true, {}, this.o.pixel_query);
         for(var i=0; i < layers.length; i++) {
 
             var layer = null;
@@ -656,8 +671,8 @@ define([
         }
 
         data.stats.pixel = {
-            lat: lat,
-            lon: lon
+            lat: latlng.lat, 
+            lon: latlng.lon
         }
 
 
@@ -691,8 +706,6 @@ define([
                     }
 
                     deferred.resolve(d);
-                },
-                error: function (err, b, c) {
                 }
             });
         }
