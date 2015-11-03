@@ -298,7 +298,7 @@ define([
 	        		html: '<img src="images/cursor.svg" /><i></i>',
 	        		iconSize: L.point(54, 54)
 	        	})
-	        }).addTo(this.o.box[i].m.map);
+	        });
 
             // create charts on map selection
             this.o.box[i].m.map.on('click', function (e) {
@@ -520,7 +520,8 @@ define([
     WSP.prototype.handlePixelSelection = function(e, val) {
 
     	for(var i=0; i < this.o.box.length; i++) {
-        	this.o.box[i].mapCursor.setIcon( L.divIcon({
+            var cur = this.o.box[i].mapCursor;
+        	cur.setIcon( L.divIcon({
 	        		html: '<img src="images/cursor.svg" /><i class="pixelval">'+parseFloat(val).toFixed(2)+'</i>',
 	        		iconSize: L.point(54, 54)
 	        	}) );
@@ -556,6 +557,10 @@ define([
 
         return selectedLayer;
     };
+
+    WSP.prototype.toggleCursor = function() {
+        this.o.box[i].mapCursor.addTo(this.o.box[i].m.map)
+    }
 
     WSP.prototype.createCharts = function(latlng) {
 
@@ -771,6 +776,19 @@ define([
             lang: 'en',
             hideLayerInControllerList: true
         }));
+
+        var btn = new L.Control({position:'topright'});
+        btn.onAdd = function(map) {
+            var azoom = L.DomUtil.create('a','pick-position');
+            azoom.innerHTML = '<i class="fa fa-map-marker"></i>';
+            L.DomEvent
+                .disableClickPropagation(azoom)
+                .addListener(azoom, 'click', function() {
+                    map.setView(map.options.center, map.options.zoom);
+                },azoom);
+            return azoom;
+        };
+        m.map.addControl(btn);
 
         return m;
     };
