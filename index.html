@@ -61,8 +61,7 @@
 			z-index: 5000;
 			background: rgba(255,255,255,1);
 			box-shadow: 0 -8px 16px rgba(0,0,0,0.2);
-			overflow-x:hidden;
-			overflow-y:scroll;
+			overflow:hidden;
 			max-height: 70%;
             min-height: 30%;
 			padding: 0 50px 0 20px;
@@ -80,7 +79,7 @@
         }*/
         #zonalsum_wrap_open {
             position: absolute;
-            bottom: 70px;
+            bottom: 70fmd-ui/px;
             left: 15px;
         }
         .close {
@@ -98,16 +97,20 @@
             text-shadow:2px 2px 3px rgba(0,0,0,0.2);
         }
         #charts_wrap .boxchart {
-            height: 280px;
-            max-height: 90%;
-            float: left;
+            height: 180px;
+            max-height: 88%;
             min-width: 40%;
-            /*border:1px solid #eee;*/
+            float: left;
+            padding-left:0;
             margin: 0 -1px -1px 0;
         }
         #charts_wrap .charts_years {
         	background: #fff;
-        	/*box-shadow: 1px 1px 4px rgba(0,0,0,0.2)*/
+            position: absolute;
+            bottom: 0;
+            right: 0;
+            padding: 0 5px;
+        	box-shadow: 1px 1px 4px rgba(0,0,0,0.2)
         }
         .chart_loader {
         	height:100px;

@@ -17,14 +17,14 @@ define(function () {
             //borderWidth: 1, //Spessore bordo intorno
             //borderRadius: 0, //Smusso bordo intorno
             //margin: [5,5,5,5], //Margine intorno (vince sullo spacing)
-            spacing: [20, 1, 1, 1],//Spacing intorno (molto simile al margin - Di default il bottom è 15, qui l'ho messo a 10 per essere uguale agli altri)
+            spacing: [10, 1, 1, 1],//Spacing intorno (molto simile al margin - Di default il bottom è 15, qui l'ho messo a 10 per essere uguale agli altri)
             //plotBackgroundColor: 'red', //Colore di background solo area chart
             plotBorderColor: '#ffffff', //Colore bordo intorno solo area chart
             plotBorderWidth: 0, //Spessore bordo intorno solo area chart
             //showAxes: false, //Mostra gli assi quando le serie sono aggiunte dinamicamente
             style: {
                 fontFamily: 'Roboto', // Font di tutto
-                fontSize: '12px', // La dimensione qui vale solo per i titoli
+                fontSize: '10px', // La dimensione qui vale solo per i titoli
                 fontWeight: 300 // Con Roboto è molto bello giocare con i pesi
             },
             zoomType: 'xy', //Attiva lo zoom e stabilisce in quale dimensione
@@ -126,7 +126,7 @@ define(function () {
             itemStyle: {
                 cursor: 'pointer',
                 color: '#666666',
-                fontSize: '14px',
+                fontSize: '12px',
                 fontWeight: 300
             },
             itemHiddenStyle: { //Colore dell'elemento legenda quando è disattivato
@@ -204,7 +204,7 @@ define(function () {
                 style: {
                     color: '#666666',
                     fontWeight: '300',
-                    fontSize: 12
+                    fontSize: 10
                 }
             },
             //type: 'datetime',
